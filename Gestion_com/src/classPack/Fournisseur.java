@@ -1,6 +1,13 @@
 package classPack;
 
 public class Fournisseur {
+private int id ;
+public int getId() {
+	return id;
+}
+public void setId(int id) {
+	this.id = id;
+}
 private String reference;
 private String rason_social;
 private String adresse;
@@ -10,9 +17,11 @@ private String num_reg_commerciale ;
 private String num_tel ;
 
 
-public Fournisseur(String reference, String rason_social, String adresse, String ville, String matricule_fiscale,
-		String num_reg_commerciale, String num_tel) {
+
+public Fournisseur(int id, String reference, String rason_social, String adresse, String ville,
+		String matricule_fiscale, String num_reg_commerciale, String num_tel) {
 	super();
+	this.id = id;
 	this.reference = reference;
 	this.rason_social = rason_social;
 	this.adresse = adresse;
