@@ -30,7 +30,8 @@ public class TestFamille extends JFrame implements MouseListener{
 	JTable jtfamille;
 	JScrollPane jsp;
 	 public TestFamille() {
-
+		 ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
+		 ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");	
 	{
 		this.setTitle("gestion des Famille");
 	    this.setSize(1300,500);

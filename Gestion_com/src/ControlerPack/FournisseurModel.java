@@ -30,10 +30,9 @@ public class FournisseurModel extends AbstractTableModel{
 				adresse=rs.getString(4);
 				ville=rs.getString(5);
 				matricule_fiscale=rs.getString(6);
-				
 				num_reg_commercial=rs.getString(7);
 				num_tel=rs.getString(8);
-			
+		//	System.out.println(idFournisseur+ref_fournisseur+raison_social+adresse+ville+matricule_fiscale+num_reg_commercial+num_tel);
 				c=new Fournisseur(idFournisseur,ref_fournisseur,raison_social,adresse,ville,matricule_fiscale,num_reg_commercial,num_tel);
 				data.add(c);
 			}
@@ -61,7 +60,7 @@ public class FournisseurModel extends AbstractTableModel{
 	@Override
 	public Object getValueAt(int l, int c) {
 		String ch="";
-		int a=0;
+		
 		
 		 Fournisseur cl=data.get(l);
 		if(c==0)
@@ -81,33 +80,40 @@ public class FournisseurModel extends AbstractTableModel{
 			{return cl.getVille();}
 		if(c==5)
 		{
-			return cl.getAdresse();
+			return cl.getMatricule_fiscale();
 		}
 		if(c==6)
 		{
-			return cl.getVille();
-		}
-		if(c==7)
-		{
-			return cl.getMatricule_fiscale();
-		}
-		if(c==8)
-		{
 			return cl.getNum_reg_commerciale();
 		}
-		if(c==9)
+		if(c==7)
 		{
 			return cl.getNum_tel();
 		}
 		
+		
 		return("erreur");
 		
 	}
+	@Override
+	public String getColumnName(int l) {
+	
+		try {
+			return rsmd.getColumnName(l+1);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public void supprimerLigne(int l){
-	data.remove(l);
+		try{
+		int a=RechercheBYID(l);
+	data.remove(a);
 	nblig --;
     fireTableDataChanged();
-		
+		}catch(Exception e){}		
 	}
 	public void AjouterLigne(Fournisseur f){
 		data.add(f);
@@ -115,11 +121,32 @@ public class FournisseurModel extends AbstractTableModel{
 	    fireTableDataChanged();
 			
 		}
-	public void ModifierLigne(int l,Fournisseur f)
-	{data.set(l,f);
+	public void ModifierLigne(Fournisseur f)
+	{int a=RechercheBYID(f.getId());
+		data.set(a,f);
 	fireTableDataChanged();
 		
 	}
+	public int RechercheBYID(int id)
+	{int i=0;
+	Boolean b=false;
+	while(i<data.size()&&(b==false))
+	{System.out.println(i);
+	if(data.get(i).getId()==id)
+	{System.out.println(data.get(i).getId());
+	b=true;
+	}	
+	i++;
 	}
+			return i-1;
+	}
+	
 
-
+public void AfficheData()
+{int i=0;
+	while(i<data.size())
+	{System.out.println(data.get(i).getId()+" "+data.get(i).getReference()+"     "+data.get(i).getRason_social()+" "+data.get(i).getAdresse()+"  "+data.get(i).getVille()+"  "+data.get(i).getMatricule_fiscale()+" "+data.get(i).getNum_reg_commerciale()+"  "+data.get(i).getNum_tel() );
+i++;
+}
+	}
+}

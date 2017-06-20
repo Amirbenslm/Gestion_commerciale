@@ -1,7 +1,8 @@
 package classPack;
 
 public class Caissier {
-	private String cin;
+	private int id_caissier;
+	private String ncin;
 	private String nom ;
 	private String prenom ;
 	private String adresse ;
@@ -9,10 +10,24 @@ public class Caissier {
 	private String telephone;
 	private String login ;
 	private String pwd ;
-	public Caissier(String cin, String nom, String prenom, String adresse, String ville, String telephone, String login,
-			String pwd) {
+	
+	public int getId_caissier() {
+		return id_caissier;
+	}
+	public void setId_caissier(int id_caissier) {
+		this.id_caissier = id_caissier;
+	}
+	public String getNcin() {
+		return ncin;
+	}
+	public void setNcin(String ncin) {
+		this.ncin = ncin;
+	}
+	public Caissier(int id_caissier, String ncin, String nom, String prenom, String adresse, String ville,
+			String telephone, String login, String pwd) {
 		super();
-		this.cin = cin;
+		this.id_caissier = id_caissier;
+		this.ncin = ncin;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.adresse = adresse;
@@ -21,11 +36,11 @@ public class Caissier {
 		this.login = login;
 		this.pwd = pwd;
 	}
-	public String getCin() {
-		return cin;
+	public String getNCin() {
+		return ncin;
 	}
-	public void setCin(String cin) {
-		this.cin = cin;
+	public void setNCin(String cin) {
+		this.ncin = ncin;
 	}
 	public String getNom() {
 		return nom;

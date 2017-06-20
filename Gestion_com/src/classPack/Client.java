@@ -1,6 +1,7 @@
 package classPack;
 
 public class Client {
+	private int idclient;
 	private String nom;
 	private String prenom ;
 	private String cin ;
@@ -11,9 +12,11 @@ public class Client {
 	private String num_reg_commerciale ;
 	private String tel ;
 	private String email ;
-	public Client(String nom, String prenom, String cin, String dateclient, String adresse, String ville,
+	
+	public Client(int idclient, String nom, String prenom, String cin, String dateclient, String adresse, String ville,
 			String matricule_fiscale, String num_reg_commerciale, String tel, String email) {
 		super();
+		this.idclient = idclient;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.cin = cin;
@@ -24,6 +27,12 @@ public class Client {
 		this.num_reg_commerciale = num_reg_commerciale;
 		this.tel = tel;
 		this.email = email;
+	}
+	public int getIdclient() {
+		return idclient;
+	}
+	public void setIdclient(int idclient) {
+		this.idclient = idclient;
 	}
 	public String getNom() {
 		return nom;

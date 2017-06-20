@@ -51,6 +51,16 @@ import classPack.Famille;
 					return 0;
 				}
 			}
+			public String getColumnName(int l) {
+				
+				try {
+					return rsmd.getColumnName(l+1);
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+					return null;
+				}
+			}
 			@Override
 			public Object getValueAt(int l, int c) {
 							
@@ -84,6 +94,19 @@ import classPack.Famille;
 			{data.set(l,f);
 			fireTableDataChanged();
 				
+			}
+			public int RechercheBYID(int id)
+			{int i=0;
+			Boolean b=false;
+			while(i<data.size()&&(b==false))
+			{System.out.println(i);
+			if(data.get(i).getId_fammille()==id)
+			{System.out.println(data.get(i).getId_fammille());
+			b=true;
+			}	
+			i++;
+			}
+					return i-1;
 			}
 			}
 

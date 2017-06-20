@@ -31,6 +31,9 @@ public class TestArticle extends JFrame implements MouseListener{
 	 public TestArticle() {
 
 	{
+		ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
+		ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");
+	
 		this.setTitle("gestion des Articles");
 	    this.setSize(1300,500);
 		 this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -38,13 +41,8 @@ public class TestArticle extends JFrame implements MouseListener{
 	    
 			
 	    jtarticle = new JTable();
-	   
-	    
-	    
 		cdb=new ArticleBase();
-		
-		  intitJtableArticle();
-			
+		jtarticle.setModel(cdb.mytablemodel);			
 			jsp=new JScrollPane(jtarticle);
 			jtarticle.addMouseListener(this);
 			JButton ajout=new JButton("Ajouter");
@@ -52,11 +50,8 @@ public class TestArticle extends JFrame implements MouseListener{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Article f=new Article(0, "referencea", "designation",10,10,10,12,"codeAbarre",1,1);
-					Article newid=cdb.AjoutArticle(f);
-					
-					if (newid!=null) {mytablemodel.AjouterLigne(newid);}
-					
+					Article f=new Article(0, "referencea22", "designationAjout",10,10,10,12,"codeAbarre",1,1);
+					cdb.AjoutArticle(f);				
 				ResultSet rech=	cdb.rechercheByReference("reference");
 				try {
 					while(rech.next())
@@ -74,13 +69,9 @@ public class TestArticle extends JFrame implements MouseListener{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Article f=new Article(10, "referenceModifier", "designation555555zzzz",10,10,10,12,"codeAbarre",1,1);
+					Article f=new Article(10, "referenceModifier125", "designation555555zzzz",10,10,10,12,"codeAbarre",1,1);
 					cdb.ModifierArticle(f);
-					if(jtarticle.getSelectedRow()==0)
-					{mytablemodel.ModifierLigne(jtarticle.getSelectedRow()+1, f);}
-					else
-					mytablemodel.ModifierLigne(jtarticle.getSelectedRow(), f);
-				}
+					}
 			});
 			this.setLayout(null);
 			ajout.setBounds(120,350,80,40);
@@ -91,20 +82,6 @@ public class TestArticle extends JFrame implements MouseListener{
 			this.add(modifier);
 	}
 	}
-	
-void intitJtableArticle() {
-	String req="SELECT * FROM ARTICLE";
-			ResultSet rs=cdb.affiche();
-int i=0;
-		
-			mytablemodel=new ArticleModel(rs);
-			System.out.println(mytablemodel.getColumnCount());
-			System.out.println(mytablemodel.getRowCount());
-			//System.out.println(mytablemodel.getValueAt(3, 2));
-			jtarticle.setModel(mytablemodel);
-	
-	
-}
 public static void main(String []args)
 {
 	System.out.println("Debut de programme");
@@ -118,13 +95,8 @@ public void mouseClicked(MouseEvent e) {
 	// TODO Auto-generated method stub
 	if(e.getSource()==jtarticle)
 		System.out.println(jtarticle.getSelectedRow());
-	
-	/*cdb.supprimerArticle((int)mytablemodel.getValueAt(jtarticle.getSelectedRow(),0));
-	 mytablemodel.supprimerLigne(jtarticle.getSelectedRow());
-	*/
-	 	
-			
-		}
+	cdb.supprimerArticle(14);
+	}
 	
 
 @Override

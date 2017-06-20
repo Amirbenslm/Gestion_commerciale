@@ -24,12 +24,16 @@ import classPack.Fournisseur;
 
 public class TestFournisseur extends JFrame implements MouseListener{
 	FournisseurBase cdb=null; 
-	public FournisseurModel mytablemodel=null;
+	//public FournisseurModel mytablemodel=null;
 	JTable jtclient;
 	JScrollPane jsp;
+
 	public TestFournisseur()
 	{
-		this.setTitle("gestion des clients");
+		ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
+		ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");
+	
+		this.setTitle("gestion des Fournisseurs");
 	    this.setSize(1300,500);
 		 this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	    this.setLocationRelativeTo(null);
@@ -37,7 +41,7 @@ public class TestFournisseur extends JFrame implements MouseListener{
 
 			public void windowClosing(WindowEvent arg0) {
 				//ConnectionDataBase.closeStatement();
-				//ConnectionDataBase.deconnection();
+			ConnectionDataBase.deconnection();
 			}});
 
 	    jtclient = new JTable();
@@ -52,18 +56,15 @@ public class TestFournisseur extends JFrame implements MouseListener{
 			jtclient.addMouseListener(this);
 			JButton ajout=new JButton("Ajouter");
 			ajout.addActionListener(new ActionListener() {
-				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					//Fournisseur f=new Fournisseur(16, "reference5555", "rason_social991", "adresse88", "ville88", "matricule_fiscale88", "num_reg_commerciale88", "num_tel88");
-					//Fournisseur newid=cdb.AjoutFournisseur(f);
+					Fournisseur f=new Fournisseur(41, "referenceModifier258", "rason_social99122222222", "adresse88", "ville88", "matricule_fiscale88", "num_reg_commerciale88", "num_tel88");
+					cdb.AjoutFournisseur(f);
 					//cdb.ModifierFournisseur(f);
-					//if (newid!=null) {mytablemodel.AjouterLigne(newid);}
-					//mytablemodel.ModifierLigne(jtclient.getSelectedRow(), f);
 				ResultSet rech=	cdb.rechercheByVille("ville88");
 				try {
 					while(rech.next())
-					{System.out.println(rech.getString(1));
+					{//System.out.println(rech.getString(1));
 						
 					}
 				} catch (SQLException e1) {
@@ -73,6 +74,7 @@ public class TestFournisseur extends JFrame implements MouseListener{
 				}
 			});
 			this.setLayout(null);
+			
 			ajout.setBounds(120,350,80,40);
 			jsp.setBounds(0,0,1200,350);
 			this.add(jsp);
@@ -80,15 +82,10 @@ public class TestFournisseur extends JFrame implements MouseListener{
 	}
 	
 void intitJtableClient() {
-	String req="SELECT * FROM `client`";
-			ResultSet rs=cdb.affiche();
-int i=0;
-		
-			mytablemodel=new FournisseurModel(rs);
-			System.out.println(mytablemodel.getColumnCount());
-			System.out.println(mytablemodel.getRowCount());
-			//System.out.println(mytablemodel.getValueAt(3, 2));
-			jtclient.setModel(mytablemodel);
+	
+	
+jtclient.setModel(cdb.mytablemodel);
+			
 	
 	
 }
@@ -105,9 +102,9 @@ public void mouseClicked(MouseEvent e) {
 	// TODO Auto-generated method stub
 	if(e.getSource()==jtclient)
 		System.out.println(jtclient.getSelectedRow());
-	System.out.println( mytablemodel.getValueAt(jtclient.getSelectedRow(),0));
-	cdb.supprimerFourisseur((int)mytablemodel.getValueAt(jtclient.getSelectedRow(),0));
-	 mytablemodel.supprimerLigne(jtclient.getSelectedRow());
+	System.out.println( cdb.mytablemodel.getValueAt(jtclient.getSelectedRow(),0));
+	cdb.supprimerFourisseur((int)cdb.mytablemodel.getValueAt(jtclient.getSelectedRow(),0));
+	 cdb.mytablemodel.supprimerLigne(jtclient.getSelectedRow());
 	
 	 	
 			

@@ -103,8 +103,19 @@ public class ArticleModel extends AbstractTableModel{
 			return("erreur");
 			
 		}
+		public String getColumnName(int l) {
+			
+			try {
+				return rsmd.getColumnName(l+1);
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+				return null;
+			}
+		}
 		public void supprimerLigne(int l){
-		data.remove(l);
+			int ligne=RechercheBYID(l);
+		data.remove(ligne);
 		nblig --;
 	    fireTableDataChanged();
 			
@@ -115,10 +126,24 @@ public class ArticleModel extends AbstractTableModel{
 		    fireTableDataChanged();
 				
 			}
-		public void ModifierLigne(int l,Article f)
-		{data.set(l,f);
+		public void ModifierLigne(Article f)
+		{int ligne=RechercheBYID(f.getId_article());
+			data.set(ligne,f);
 		fireTableDataChanged();
 			
+		}
+		public int RechercheBYID(int id)
+		{int i=0;
+		Boolean b=false;
+		while(i<data.size()&&(b==false))
+		{
+		if(data.get(i).getId_article()==id)
+		{System.out.println(data.get(i).getId_article());
+		b=true;
+		}	
+		i++;
+		}
+				return i-1;
 		}
 		}
 
