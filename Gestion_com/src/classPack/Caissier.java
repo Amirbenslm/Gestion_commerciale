@@ -17,12 +17,7 @@ public class Caissier {
 	public void setId_caissier(int id_caissier) {
 		this.id_caissier = id_caissier;
 	}
-	public String getNcin() {
-		return ncin;
-	}
-	public void setNcin(String ncin) {
-		this.ncin = ncin;
-	}
+	
 	public Caissier(int id_caissier, String ncin, String nom, String prenom, String adresse, String ville,
 			String telephone, String login, String pwd) {
 		super();
@@ -36,10 +31,11 @@ public class Caissier {
 		this.login = login;
 		this.pwd = pwd;
 	}
-	public String getNCin() {
+	
+	public String getNcin() {
 		return ncin;
 	}
-	public void setNCin(String cin) {
+	public void setNcin(String ncin) {
 		this.ncin = ncin;
 	}
 	public String getNom() {

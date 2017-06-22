@@ -21,35 +21,36 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import classPack.Article;
+import classPack.Caissier;
 import classPack.Famille;
 import classPack.Fournisseur;
 
-public class TestFamille extends JFrame implements MouseListener{
-	FamilleBase cdb=null; 
-	public FamilleModel mytablemodel=null;
-	JTable jtfamille;
+public class TestCaissier extends JFrame implements MouseListener{
+	CaissierBase cdb=null; 
+	public CaissierModel mytablemodel=null;
+	JTable jtCaissier;
 	JScrollPane jsp;
-	 public TestFamille() {
+	 public TestCaissier() {
 		 ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
 		 ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");	
 	{
-		this.setTitle("gestion des Famille");
+		this.setTitle("gestion des Caissier");
 	    this.setSize(1300,500);
 		 this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	    this.setLocationRelativeTo(null);	
-	    jtfamille = new JTable();
-		cdb=new FamilleBase();
+	    jtCaissier = new JTable();
+		cdb=new CaissierBase();
 		  intitJtableFamille();	
-			jsp=new JScrollPane(jtfamille);
-			jtfamille.addMouseListener(this);
+			jsp=new JScrollPane(jtCaissier);
+			jtCaissier.addMouseListener(this);
 			JButton ajout=new JButton("Ajouter");
 			ajout.addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Famille f=new Famille(0,"Famille4ze",1);
-					cdb.AjoutFamille(f);				
-				ResultSet rech=	cdb.rechercheByNomFamille("fam1");
+					Caissier f=new Caissier(0,"ncin","nom","prenom","adresse","ville","telephone","login","pwd");
+					cdb.AjoutCaissier(f);				
+				ResultSet rech=	cdb.rechercheByNCIN("fam1");
 				try {
 					while(rech.next())
 					{System.out.println(rech.getString(1));
@@ -66,8 +67,8 @@ public class TestFamille extends JFrame implements MouseListener{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Famille f=new Famille(7,"FamillModifier",1);
-					cdb.ModifierFamille(f);
+					Caissier f=new Caissier(1,"ncinMod","nom","prenom","adresse","ville","telephone","login","pwd");
+					cdb.ModifierCAissier(f);
 					}
 			});
 			this.setLayout(null);
@@ -83,14 +84,14 @@ public class TestFamille extends JFrame implements MouseListener{
 void intitJtableFamille() {
 	
 			
-			jtfamille.setModel(cdb.mytablemodel);
+			jtCaissier.setModel(cdb.mytablemodel);
 	
 	
 }
 public static void main(String []args)
 {
 	System.out.println("Debut de programme");
-	 TestFamille c=new TestFamille();
+	 TestCaissier c=new TestCaissier();
 	 c.setVisible(true);
 	System.out.println("Fin de programme"); 
 
@@ -98,8 +99,8 @@ public static void main(String []args)
 @Override
 public void mouseClicked(MouseEvent e) {
 	// TODO Auto-generated method stub
-	if(e.getSource()==jtfamille)
-	cdb.supprimerFamille((int)cdb.mytablemodel.getValueAt(jtfamille.getSelectedRow(),0));	
+	if(e.getSource()==jtCaissier)
+	cdb.supprimerCaissier((int)cdb.mytablemodel.getValueAt(jtCaissier.getSelectedRow(),0));	
 		}
 @Override
 public void mousePressed(MouseEvent e) {

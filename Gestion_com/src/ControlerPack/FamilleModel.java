@@ -78,8 +78,9 @@ import classPack.Famille;
 				return("erreur");
 				
 			}
-			public void supprimerLigne(int l){
-			data.remove(l);
+			public void supprimerLigne(int id){
+				int ligne=RechercheBYID(id);
+			data.remove(ligne);
 			nblig --;
 		    fireTableDataChanged();
 				
@@ -87,11 +88,11 @@ import classPack.Famille;
 			public void AjouterLigne(Famille f){
 				data.add(f);
 				nblig ++;
-			    fireTableDataChanged();
-					
-				}
-			public void ModifierLigne(int l,Famille f)
-			{data.set(l,f);
+			    fireTableDataChanged();	}
+			
+			public void ModifierLigne(Famille f)
+			{int ligne=RechercheBYID(f.getId_fammille());
+				data.set(ligne,f);
 			fireTableDataChanged();
 				
 			}
