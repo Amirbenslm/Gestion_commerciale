@@ -1,13 +1,17 @@
 package classPack;
 
 public class Facture {
+	private int id_facture;
 	private String reference ;
-	private String retour_source;
-	private String taxe_fiscale;
-	private String fodec ;
+	private float retour_source;
+	private float taxe_fiscale;
+	private float fodec ;
 	private int id_doc_vente;
-	public Facture(String reference, String retour_source, String taxe_fiscale, String fodec, int id_doc_vente) {
+	
+	public Facture(int id_facture, String reference, float retour_source, float taxe_fiscale, float fodec,
+			int id_doc_vente) {
 		super();
+		this.setId_facture(id_facture);
 		this.reference = reference;
 		this.retour_source = retour_source;
 		this.taxe_fiscale = taxe_fiscale;
@@ -20,22 +24,22 @@ public class Facture {
 	public void setReference(String reference) {
 		this.reference = reference;
 	}
-	public String getRetour_source() {
+	public float getRetour_source() {
 		return retour_source;
 	}
-	public void setRetour_source(String retour_source) {
+	public void setRetour_source(float retour_source) {
 		this.retour_source = retour_source;
 	}
-	public String getTaxe_fiscale() {
+	public float getTaxe_fiscale() {
 		return taxe_fiscale;
 	}
-	public void setTaxe_fiscale(String taxe_fiscale) {
+	public void setTaxe_fiscale(float taxe_fiscale) {
 		this.taxe_fiscale = taxe_fiscale;
 	}
-	public String getFodec() {
+	public float getFodec() {
 		return fodec;
 	}
-	public void setFodec(String fodec) {
+	public void setFodec(float fodec) {
 		this.fodec = fodec;
 	}
 	public int getId_doc_vente() {
@@ -43,5 +47,11 @@ public class Facture {
 	}
 	public void setId_doc_vente(int id_doc_vente) {
 		this.id_doc_vente = id_doc_vente;
+	}
+	public int getId_facture() {
+		return id_facture;
+	}
+	public void setId_facture(int id_facture) {
+		this.id_facture = id_facture;
 	}
 }

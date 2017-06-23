@@ -28,10 +28,10 @@ public class Client {
 		this.tel = tel;
 		this.email = email;
 	}
-	public int getIdclient() {
+	public int getIdClient() {
 		return idclient;
 	}
-	public void setIdclient(int idclient) {
+	public void setIdClient(int idclient) {
 		this.idclient = idclient;
 	}
 	public String getNom() {

@@ -31,7 +31,7 @@ public class CaissierBase{
 public boolean AjoutCaissier(Caissier f1)
 {String req="INSERT INTO caissier(ncin,nom,prenom,adresse,ville,telephone,login,pwd) VALUES('"+f1.getNcin()+"','"+f1.getNom()+"','"+f1.getPrenom()+"','"+f1.getAdresse()+"','"+f1.getVille()+"','"+f1.getTelephone()+"','"+f1.getLogin()+"','"+f1.getPwd()+"')";
 String exsist="select * from caissier where ncin='"+f1.getNcin()+"'"+"and nom='"+f1.getNom()+"'"+"and prenom='"+f1.getPrenom()+"'"+"and adresse='"+f1.getAdresse()+"'"+"and telephone='"+f1.getTelephone()+"'"+"and login='"+f1.getLogin()+"'"+"and pwd='"+f1.getPwd()+"'";
-String rech="select max(id_caissier) from from caissier where ncin='"+f1.getNcin()+"'"+"and nom='"+f1.getNom()+"'"+"and prenom='"+f1.getPrenom()+"'"+"and adresse='"+f1.getAdresse()+"'"+"and telephone='"+f1.getTelephone()+"'"+"and login='"+f1.getLogin()+"'"+"and pwd='"+f1.getPwd()+"'";
+String rech="select max(id_caissier)  from caissier where ncin='"+f1.getNcin()+"'"+"and nom='"+f1.getNom()+"'"+"and prenom='"+f1.getPrenom()+"'"+"and adresse='"+f1.getAdresse()+"'"+"and telephone='"+f1.getTelephone()+"'"+"and login='"+f1.getLogin()+"'"+"and pwd='"+f1.getPwd()+"'";
 
 ResultSet existe=ConnectionDataBase.executeQuery(exsist);
 try {

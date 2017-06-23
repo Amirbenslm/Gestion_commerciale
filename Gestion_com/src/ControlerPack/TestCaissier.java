@@ -48,7 +48,7 @@ public class TestCaissier extends JFrame implements MouseListener{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Caissier f=new Caissier(0,"ncin","nom","prenom","adresse","ville","telephone","login","pwd");
+					Caissier f=new Caissier(0,"ncin2","nom","prenom","adresse","ville","telephone","login","pwd");
 					cdb.AjoutCaissier(f);				
 				ResultSet rech=	cdb.rechercheByNCIN("fam1");
 				try {

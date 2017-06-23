@@ -16,8 +16,7 @@ import classPack.Fournisseur;
 
 public class FournisseurBase{
 	
-	Statement st;
-	Connection con;
+
 	public FournisseurModel mytablemodel;
 	
 	public FournisseurBase()
