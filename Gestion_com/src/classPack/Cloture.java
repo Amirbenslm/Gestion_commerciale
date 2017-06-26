@@ -1,13 +1,16 @@
 package classPack;
 
 public class Cloture {
+	private int id_cloture;
 	private  String date ;
 	private double montant_ouverture;
 	private double montant_fermeture;
 	private int id_cassier ;
 	
-	public Cloture(String date, double montant_ouverture, double montant_fermeture, int id_cassier) {
+	
+	public Cloture(int id_cloture, String date, double montant_ouverture, double montant_fermeture, int id_cassier) {
 		super();
+		this.id_cloture = id_cloture;
 		this.date = date;
 		this.montant_ouverture = montant_ouverture;
 		this.montant_fermeture = montant_fermeture;
@@ -36,6 +39,12 @@ public class Cloture {
 	}
 	public void setId_cassier(int id_cassier) {
 		this.id_cassier = id_cassier;
+	}
+	public int getId_cloture() {
+		return id_cloture;
+	}
+	public void setId_cloture(int id_cloture) {
+		this.id_cloture = id_cloture;
 	}
 	
 

@@ -1,32 +1,48 @@
 package classPack;
 
 public class Bon_livraison_vente {
-private String reference ;
+	private int id_bon_livraison;
+private String ref_bon_livraison ;
 private int id_doc_vente;
-private int id_factureV;
-public Bon_livraison_vente(String reference, int id_doc_vente, int id_factureV) {
+private int id_facture;
+
+public Bon_livraison_vente(int id_bon_livraison, String ref_bon_livraison, int id_doc_vente, int id_facture) {
 	super();
-	this.reference = reference;
+	this.id_bon_livraison = id_bon_livraison;
+	this.ref_bon_livraison = ref_bon_livraison;
 	this.id_doc_vente = id_doc_vente;
-	this.id_factureV = id_factureV;
+	this.id_facture = id_facture;
 }
-public String getReference() {
-	return reference;
+
+public int getId_bon_livraison() {
+	return id_bon_livraison;
 }
-public void setReference(String reference) {
-	this.reference = reference;
+
+public void setId_bon_livraison(int id_bon_livraison) {
+	this.id_bon_livraison = id_bon_livraison;
 }
+
+public String getRef_bon_livraison() {
+	return ref_bon_livraison;
+}
+
+public void setRef_bon_livraison(String ref_bon_livraison) {
+	this.ref_bon_livraison = ref_bon_livraison;
+}
+
 public int getId_doc_vente() {
 	return id_doc_vente;
 }
+
 public void setId_doc_vente(int id_doc_vente) {
 	this.id_doc_vente = id_doc_vente;
 }
-public int getId_factureV() {
-	return id_factureV;
-}
-public void setId_factureV(int id_factureV) {
-	this.id_factureV = id_factureV;
+
+public int getId_facture() {
+	return id_facture;
 }
 
+public void setId_facture(int id_facture) {
+	this.id_facture = id_facture;
+}
 }
