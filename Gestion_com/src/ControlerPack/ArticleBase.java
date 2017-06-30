@@ -12,7 +12,7 @@ import classPack.Article;
 import classPack.Fournisseur;
 
 public class ArticleBase {
-	ArticleModel mytablemodel;
+	public ArticleModel mytablemodel;
 	
 	public ArticleBase()
 	{ mytablemodel=new ArticleModel(affiche());

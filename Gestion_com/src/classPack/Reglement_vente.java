@@ -1,13 +1,17 @@
 package classPack;
 
 public class Reglement_vente {
+	private int id_reg_vente ;
 	private double montant;
 	private String mode_payement ;
 	private String echeance ;
-	private String id_doc_vente;
+	private int id_doc_vente;
 	
-	public Reglement_vente(double montant, String mode_payement, String echeance, String id_doc_vente) {
+	
+	public Reglement_vente(int id_reg_vente, double montant, String mode_payement, String echeance,
+			int id_doc_vente) {
 		super();
+		this.id_reg_vente = id_reg_vente;
 		this.montant = montant;
 		this.mode_payement = mode_payement;
 		this.echeance = echeance;
@@ -31,11 +35,17 @@ public class Reglement_vente {
 	public void setEcheance(String echeance) {
 		this.echeance = echeance;
 	}
-	public String getId_doc_vente() {
+	public int getId_doc_vente() {
 		return id_doc_vente;
 	}
-	public void setId_doc_vente(String id_doc_achat) {
-		this.id_doc_vente = id_doc_achat;
+	public void setId_doc_vente(int id_doc_vente) {
+		this.id_doc_vente = id_doc_vente;
+	}
+	public int getId_reg_vente() {
+		return id_reg_vente;
+	}
+	public void setId_reg_vente(int id_reg_vente) {
+		this.id_reg_vente = id_reg_vente;
 	}
 	
 

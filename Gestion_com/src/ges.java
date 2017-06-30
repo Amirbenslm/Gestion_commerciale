@@ -1,18 +1,16 @@
-package ControlerPack;
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JSplitPane;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
 
-public class TestFor extends JFrame {
+public class ges extends JFrame {
 
 	private JPanel contentPane;
-	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -21,7 +19,7 @@ public class TestFor extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TestFor frame = new TestFor();
+					ges frame = new ges();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,23 +31,17 @@ public class TestFor extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TestFor() {
+	public ges() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 733, 401);
+		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column"
-			}
-		));
-		table.setBounds(103, 24, 492, 241);
-		contentPane.add(table);
+		JSplitPane splitPane = new JSplitPane();
+		splitPane.setBounds(0, 0, 424, 261);
+		contentPane.add(splitPane);
 	}
+
 }

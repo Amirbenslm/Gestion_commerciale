@@ -1,14 +1,27 @@
 package classPack;
 
 public class Document_vente {
-	private String dateDoccument;
+	private int id_documentV ;
+	private String date_doccumentV;
 	private int id_client;
-	private int id_article;
-	public String getDateDoccument() {
-		return dateDoccument;
+	
+	public Document_vente(int id_documentV, String date_doccumentV, int id_client) {
+		super();
+		this.id_documentV = id_documentV;
+		this.date_doccumentV = date_doccumentV;
+		this.id_client = id_client;
 	}
-	public void setDateDoccument(String dateDoccument) {
-		this.dateDoccument = dateDoccument;
+	public int getId_documentV() {
+		return id_documentV;
+	}
+	public void setId_documentV(int id_documentV) {
+		this.id_documentV = id_documentV;
+	}
+	public String getDate_doccumentV() {
+		return date_doccumentV;
+	}
+	public void setDate_doccumentV(String date_doccumentV) {
+		this.date_doccumentV = date_doccumentV;
 	}
 	public int getId_client() {
 		return id_client;
@@ -16,17 +29,6 @@ public class Document_vente {
 	public void setId_client(int id_client) {
 		this.id_client = id_client;
 	}
-	public int getId_article() {
-		return id_article;
-	}
-	public void setId_article(int id_article) {
-		this.id_article = id_article;
-	}
-	public Document_vente(String dateDoccument, int id_client, int id_article) {
-		super();
-		this.dateDoccument = dateDoccument;
-		this.id_client = id_client;
-		this.id_article = id_article;
-	}
+
 
 }

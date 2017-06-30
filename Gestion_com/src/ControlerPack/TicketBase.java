@@ -46,7 +46,7 @@ try {
 }
 
 
-public int ModifierFacture(Ticket f1)
+public int ModifierTicket(Ticket f1)
 {String req="update  ticket set ref_ticket='"+f1.getReference()+"',date='"+f1.getDate()+"',id_doc_vente="+f1.getId_doc_vente()+",id_caissier="+f1.getId_cassier()+" where id_ticket="+f1.getId_ticket();	
  int x=ConnectionDataBase.executeUpdate(req);
 mytablemodel.ModifierLigne(f1);

@@ -1,6 +1,7 @@
 package classPack;
 
 public class Document_achat {
+	private int id_documentA ;
 	private String dateDoccument;
 	private int id_article;
 	private int id_fournisseur;
@@ -22,11 +23,19 @@ public class Document_achat {
 	public void setId_article(int id_article) {
 		this.id_article = id_article;
 	}
-	public Document_achat(String dateDoccument, int id_fournisseur, int id_article) {
+	
+	public Document_achat(int id_documentA, String dateDoccument, int id_article, int id_fournisseur) {
 		super();
+		this.id_documentA = id_documentA;
 		this.dateDoccument = dateDoccument;
-		this.id_fournisseur = id_fournisseur;
 		this.id_article = id_article;
+		this.id_fournisseur = id_fournisseur;
+	}
+	public int getId_documentA() {
+		return id_documentA;
+	}
+	public void setId_documentA(int id_documentA) {
+		this.id_documentA = id_documentA;
 	}
 
 }

@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.UIManager;
@@ -76,8 +78,9 @@ public class Athentification extends JFrame {
 		contentPane.add(pwd);
 		
 		JLabel lblNewLabel = new JLabel("New label");
+		Image img=new ImageIcon(this.getClass().getResource("/cle.png")).getImage();
+		lblNewLabel.setIcon(new ImageIcon(img));
 		lblNewLabel.setBackground(UIManager.getColor("InternalFrame.inactiveTitleBackground"));
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Amir\\Desktop\\Stage\\1498350256_lock.png"));
 		lblNewLabel.setBounds(10, 36, 134, 130);
 		contentPane.add(lblNewLabel);
 		

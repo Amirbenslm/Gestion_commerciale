@@ -73,7 +73,7 @@ TicketBase cdb=null;
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Ticket f=new Ticket(10,"REference","2017-06-08 00:00:00",1,2);
-					cdb.ModifierFacture(f);
+					cdb.ModifierTicket(f);
 					}
 			});
 			this.setLayout(null);
