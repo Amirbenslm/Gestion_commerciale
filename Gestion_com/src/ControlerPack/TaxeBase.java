@@ -1,18 +1,11 @@
 package ControlerPack;
 
-
-
 import java.awt.HeadlessException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import classPack.Taxe;
-
-
-
-
-
 
 public class TaxeBase{
 
@@ -48,7 +41,7 @@ try {
 }
 
 
-public int ModifierFacture(Taxe f1)
+public int ModifierTaxe(Taxe f1)
 {String req="update  Taxe set libelle='"+f1.getLibelle()+"',taux="+f1.getTaux()+" where id_taxe="+f1.getId_taxe();	
  int x=ConnectionDataBase.executeUpdate(req);
 mytablemodel.ModifierLigne(f1);
@@ -81,7 +74,10 @@ public void supprimerTaxe(int id)
 	else
 		mytablemodel.supprimerLigne(id);
 }
-
+public Taxe getTaxe(int ligne)
+{
+return mytablemodel.getLigne(ligne);
+}
 
 
 }

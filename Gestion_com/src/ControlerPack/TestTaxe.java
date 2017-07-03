@@ -75,7 +75,7 @@ TaxeBase cdb=null;
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Taxe f=new Taxe(3,"libelle",2);
-					cdb.ModifierFacture(f);
+					cdb.ModifierTaxe(f);
 					}
 			});
 			this.setLayout(null);

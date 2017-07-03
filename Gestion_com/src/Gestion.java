@@ -8,37 +8,23 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
-import java.awt.Font;
 import java.awt.Image;
 
-import javax.swing.JSplitPane;
-import javax.swing.JTable;
-import javax.swing.JToggleButton;
-import javax.swing.JEditorPane;
-import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
 import java.awt.GridLayout;
 import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
 import java.awt.Window.Type;
-import javax.swing.JScrollPane;
-import java.awt.BorderLayout;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.TitledBorder;
+
 import javax.swing.JTextField;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 public class Gestion {
 
 	private JFrame frame;
 	JPanel panel,panel1 ;
-	private JTextField textField;
 	/**
 	 * Launch the application.
 	 */
@@ -112,6 +98,12 @@ public class Gestion {
 		mnStructure.add(mntmArticles);
 		
 		JMenuItem mntmTaxes = new JMenuItem("Taxes");
+		mntmTaxes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Taxes taxeframe=new Taxes();
+				taxeframe.setVisible(true);
+			}
+		});
 		mnStructure.add(mntmTaxes);
 		
 		JMenu mnTraitement = new JMenu("Traitement");
@@ -139,8 +131,8 @@ public class Gestion {
 		panel.setBounds(101, 0, 771, 528);
 		Image img=new ImageIcon(this.getClass().getResource("/articles.png")).getImage();
 		Image imgclient=new ImageIcon(this.getClass().getResource("/client.png")).getImage();
-		panel1=new PanelClient();
-		panel1.setBounds(101, 0, 771, 528);
+	
+		//panel1.setBounds(101, 0, 771, 528);
 		Image imgfour=new ImageIcon(this.getClass().getResource("/four.png")).getImage();
 		Image imgfac=new ImageIcon(this.getClass().getResource("/facture.png")).getImage();
 		Image imgcom=new ImageIcon(this.getClass().getResource("/commande.png")).getImage();
@@ -220,46 +212,7 @@ public class Gestion {
 		JDesktopPane desktopPane = new JDesktopPane();
 		desktopPane.setBounds(164, 0, 1198, 685);
 		frame.getContentPane().add(desktopPane);
-		/*
-		JInternalFrame ArticleInternalFrame = new JInternalFrame("Articles");
-		ArticleInternalFrame.setBorder(null);
-		ArticleInternalFrame.setResizable(true);
-		ArticleInternalFrame.setIconifiable(true);
-		ArticleInternalFrame.setClosable(true);
-		ArticleInternalFrame.setBounds(0, 0, 1198, 685);
-		ArticleInternalFrame.setVisible(true);
-		desktopPane.add(ArticleInternalFrame);
-		ArticleInternalFrame.getContentPane().setLayout(null);
 		
-		JButton btnNewButton_1 = new JButton("Ajouter");
-		btnNewButton_1.setBackground(SystemColor.controlHighlight);
-		btnNewButton_1.setBounds(0, 0, 108, 74);
-		ArticleInternalFrame.getContentPane().add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("Modifier");
-		btnNewButton_2.setBackground(SystemColor.controlHighlight);
-		btnNewButton_2.setBounds(105, 0, 108, 74);
-		ArticleInternalFrame.getContentPane().add(btnNewButton_2);
-		
-		JButton btnNewButton_3 = new JButton("Supprimer");
-		btnNewButton_3.setBackground(SystemColor.controlHighlight);
-		btnNewButton_3.setBounds(211, 0, 108, 74);
-		ArticleInternalFrame.getContentPane().add(btnNewButton_3);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(null, "Rechercher", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 191, 255)));
-		panel_2.setBounds(10, 85, 370, 81);
-		ArticleInternalFrame.getContentPane().add(panel_2);
-		panel_2.setLayout(null);
-		
-		textField = new JTextField();
-		textField.setBounds(10, 25, 255, 28);
-		panel_2.add(textField);
-		textField.setColumns(10);
-		
-		JButton btnNewButton_4 = new JButton("");
-		btnNewButton_4.setBounds(281, 25, 56, 26);
-		panel_2.add(btnNewButton_4);*/
 		bdevis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}

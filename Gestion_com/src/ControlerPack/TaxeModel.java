@@ -105,14 +105,17 @@ public class TaxeModel extends AbstractTableModel{
 	while(i<data.size()&&(b==false))
 	{
 	if(data.get(i).getId_taxe()==id)
-	{System.out.println(data.get(i).getId_taxe());
+	{
 	b=true;
 	}	
 	i++;
 	}
 			return i-1;
 	}
-	
+	public Taxe getLigne(int ligne)
+	{return data.get(ligne);
+		
+	}
 
 	
 }

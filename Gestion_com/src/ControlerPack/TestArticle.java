@@ -94,7 +94,7 @@ public static void main(String []args)
 public void mouseClicked(MouseEvent e) {
 	// TODO Auto-generated method stub
 	if(e.getSource()==jtarticle)
-		System.out.println(jtarticle.getSelectedRow());
+		
 	cdb.supprimerArticle(14);
 	}
 	
