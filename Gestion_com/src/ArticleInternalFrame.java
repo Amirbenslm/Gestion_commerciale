@@ -1,23 +1,30 @@
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
-
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-
 import ControlerPack.ArticleBase;
 import ControlerPack.ArticleModel;
 import ControlerPack.ConnectionDataBase;
-
+import classPack.Article;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-public class ArticleInternalFrame extends JInternalFrame {
+public class ArticleInternalFrame extends JInternalFrame implements MouseListener {
 
 	/**
 	 * Launch the application.
@@ -34,18 +41,20 @@ public class ArticleInternalFrame extends JInternalFrame {
 			}
 		});
 	}
-	public static ArticleModel mytablemodel;
-	private JTextField textField;
-	private JTable table;
 	
-	//public ArticleModel mytablemodel=ab.mytablemodel;
+	private JTextField textRecherche;
+	private JTable table;
+	ArticleBase db_article=null;
+	private JComboBox<String> cb_Recherche;
+	private String req,s;
+	ResultSet rsrech;
 	/**
 	 * Create the frame.
 	 */
 	public ArticleInternalFrame() {
-		 ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
+		ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
 		ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");
-		ArticleBase ab=new ArticleBase();
+		 db_article=new ArticleBase();
 		setBounds(100, 100, 450, 300);
 		this.setBorder(null);
 		this.setResizable(true);
@@ -55,28 +64,56 @@ public class ArticleInternalFrame extends JInternalFrame {
 		this.setVisible(true);
 		
 		this.getContentPane().setLayout(null);
+
+		 cb_Recherche = new JComboBox<String>();
+		cb_Recherche.setModel(new DefaultComboBoxModel(new String[] {"R\u00E9ference", "Designation", "Code Abarre"}));
+		cb_Recherche.setBounds(21, 25, 133, 28);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Rechercher", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 191, 255)));
-		panel_2.setBounds(10, 85, 370, 81);
+		panel_2.setBounds(10, 85, 563, 81);
 		this.getContentPane().add(panel_2);
 		panel_2.setLayout(null);
+		panel_2.add(cb_Recherche);
+		textRecherche = new JTextField();
+		textRecherche.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				search();
+			}
+		});
+		textRecherche.setBounds(232, 25, 255, 28);
+		panel_2.add(textRecherche);
+		textRecherche.setColumns(10);
 		
-		textField = new JTextField();
-		textField.setBounds(10, 25, 255, 28);
-		panel_2.add(textField);
-		textField.setColumns(10);
+		JButton btnRechercher = new JButton("");
+		btnRechercher.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				search();
+			}
+			});
+		btnRechercher.setBounds(497, 25, 39, 28);
+		panel_2.add(btnRechercher);
 		
-		JButton btnNewButton_4 = new JButton("");
-		btnNewButton_4.setBounds(281, 25, 56, 26);
-		panel_2.add(btnNewButton_4);
+		JButton btnReturn = new JButton("");
+		btnReturn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				table.setModel(db_article.mytablemodel);
+			}
+		});
+		btnReturn.setBounds(185, 25, 39, 28);
+		panel_2.add(btnReturn);
+		
 		
 		
 		table = new JTable();
 		
-		mytablemodel=ab.mytablemodel;
 		
-		table.setModel(mytablemodel);
+		
+		table.setModel(db_article.mytablemodel);
+		
+		table.addMouseListener(this);
 		
 		
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -92,7 +129,7 @@ panel.setLayout(null);
 JButton btnNewButton_1 = new JButton("Ajouter");
 btnNewButton_1.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
-		ArticleAjout FenetreAritcle =new ArticleAjout();
+		ArticleAjout FenetreAritcle =new ArticleAjout(db_article);
 		FenetreAritcle.setVisible(true);
 		
 	}
@@ -102,14 +139,107 @@ panel.add(btnNewButton_1);
 btnNewButton_1.setBackground(SystemColor.controlHighlight);
 
 JButton btnNewButton_2 = new JButton("Modifier");
+btnNewButton_2.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+		if(table.isRowSelected(table.getSelectedRow()))
+		{
+		Article a1= db_article.getArticle((int)db_article.mytablemodel.getValueAt(table.getSelectedRow(),0));
+		ArticleModifier articlemodifier=new ArticleModifier(db_article,a1);
+	
+	}
+	else
+	{JOptionPane.showMessageDialog(null,"Il faut selectionner une ligne!","Erreur",JOptionPane.ERROR_MESSAGE);}
+}
+
+});
 btnNewButton_2.setBounds(108, 3, 108, 74);
 panel.add(btnNewButton_2);
 btnNewButton_2.setBackground(SystemColor.controlHighlight);
 
 JButton btnNewButton_3 = new JButton("Supprimer");
+btnNewButton_3.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+		if(table.isRowSelected(table.getSelectedRow()))
+		{
+			
+			db_article.supprimerArticle((int)db_article.mytablemodel.getValueAt(table.getSelectedRow(),0));
+		}
+		else
+		{JOptionPane.showMessageDialog(null,"Il faut selectionner une ligne!","Erreur",JOptionPane.ERROR_MESSAGE);}
+	}
+	
+});
+
+
+
 btnNewButton_3.setBounds(214, 3, 108, 74);
 panel.add(btnNewButton_3);
 btnNewButton_3.setBackground(SystemColor.controlHighlight);
 
 	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if (e.getClickCount() == 2){
+			Article a1= db_article.getArticle((int)db_article.mytablemodel.getValueAt(table.getSelectedRow(),0));
+			ArticleModifier articlemodifier=new ArticleModifier(db_article,a1);
+		}
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void search()
+	{
+		 s=textRecherche.getText();
+			if(cb_Recherche.getSelectedItem().toString().equals("R\u00E9ference"))
+			{ req = "select * from article where reference LIKE '%"+s+"%'";	
+			}
+			if(cb_Recherche.getSelectedItem().toString().equals("Designation"))
+			{ req = "select * from article where designation LIKE '%"+s+"%'";
+				
+			}
+			if(cb_Recherche.getSelectedItem().toString().equals("Code Abarre"))
+			{ req = "select * from article where code_abar LIKE '%"+s+"%'";
+			}
+			
+			
+			rsrech=ConnectionDataBase.executeQuery(req);
+			
+			try {
+			
+				if(rsrech.next())
+				{	
+				table.setModel(new ArticleModel(rsrech));
+				}
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			}
+		
+		
+		
+	
 }

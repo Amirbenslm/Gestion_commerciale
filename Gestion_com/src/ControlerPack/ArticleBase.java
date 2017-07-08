@@ -78,4 +78,8 @@ public ResultSet rechercheByID(int id)
 	{
 		return ConnectionDataBase.executeQuery("select * from article where designation='"+s+"'");
 	}
+	public Article getArticle(int selectedRow) {
+		// TODO Auto-generated method stub
+		return mytablemodel.getArticle(selectedRow);
+	}
 }

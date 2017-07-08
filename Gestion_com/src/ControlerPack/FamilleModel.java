@@ -109,6 +109,10 @@ import classPack.Famille;
 			}
 					return i-1;
 			}
+			public Famille getFamille(int id) {
+				int ligne =RechercheBYID(id);
+				return data.get(ligne);
+			}
 			}
 
 

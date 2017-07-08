@@ -1,30 +1,32 @@
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import ControlerPack.ArticleBase;
+
 import ControlerPack.ConnectionDataBase;
 import ControlerPack.FamilleBase;
 import ControlerPack.TaxeBase;
 import classPack.Article;
 
+import java.awt.Color;
 import javax.swing.UIManager;
 import java.awt.SystemColor;
 import java.awt.GridLayout;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
-public class ArticleAjout extends JFrame {
+public class ArticleModifier extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField designation;
@@ -34,16 +36,16 @@ public class ArticleAjout extends JFrame {
 	private JTextField codeAbarre;
 	private JTextField QteStock;
 	private JTextField QteMin;
-
+	private Article artiModifier;
 	/**
 	 * Launch the application.
 	 */
-	/*public static void main(String[] args) {
+	/* public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					//ArticleAjout frame = new ArticleAjout(mytablemodel);
-					//frame.setVisible(true);
+					ArticleModifier frame = new ArticleModifier();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -54,7 +56,9 @@ public class ArticleAjout extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ArticleAjout(ArticleBase db_article ) {
+	public  ArticleModifier(ArticleBase db_article,Article a1) {
+		// TODO Auto-generated constructor stub
+	artiModifier=a1;
 		setVisible(true);
 		
 		setResizable(false);
@@ -66,7 +70,7 @@ public class ArticleAjout extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Ajouter article", TitledBorder.CENTER, TitledBorder.TOP, null, SystemColor.textHighlight));
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Modifier article", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(51, 153, 255)));
 		panel.setBounds(10, 11, 597, 293);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -98,14 +102,14 @@ public class ArticleAjout extends JFrame {
 		prixunitaire = new JTextField();
 		panel_1.add(prixunitaire);
 		prixunitaire.setColumns(10);
-		prixunitaire.setInputVerifier(new FloatVerifier());
+		
 		JLabel lblNewLabel_3 = new JLabel("Prix TTC");
 		panel_1.add(lblNewLabel_3);
 		
 		prixTTC = new JTextField();
 		panel_1.add(prixTTC);
 		prixTTC.setColumns(10);
-		prixTTC.setInputVerifier(new FloatVerifier());
+		
 		JLabel lblNewLabel_4 = new JLabel("Code Abarre");
 		panel_1.add(lblNewLabel_4);
 		
@@ -124,14 +128,14 @@ public class ArticleAjout extends JFrame {
 		QteStock = new JTextField();
 		panel_2.add(QteStock);
 		QteStock.setColumns(10);
-		QteStock.setInputVerifier(new FloatVerifier());
+		
 		JLabel lblNewLabel_7 = new JLabel("Quantit\u00E9 minimum");
 		panel_2.add(lblNewLabel_7);
 		
 		QteMin = new JTextField();
 		panel_2.add(QteMin);
 		QteMin.setColumns(10);
-		QteMin.setInputVerifier(new FloatVerifier());
+		
 		JLabel lblNewLabel_8 = new JLabel("Taxe");
 		panel_2.add(lblNewLabel_8);
 		
@@ -167,12 +171,17 @@ public class ArticleAjout extends JFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		JButton btnAjouter = new JButton("Ajouter");
-		btnAjouter.addActionListener(new ActionListener() {
+		designation.setText(a1.getDesignation());
+		reference.setText(a1.getReference());
+		prixTTC.setText(String.valueOf(a1.getPrixTTc()));
+		prixunitaire.setText(String.valueOf(a1.getPrix_unitaire()));
+		QteMin.setText(String.valueOf(a1.getQuantiteMin()));
+		QteStock.setText(String.valueOf(a1.getQuantiteStock()));
+		codeAbarre.setText(a1.getCodeAbarre());
+		JButton btnModifier = new JButton("Modifier");
+		btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//if(
-				int id_famille=0, id_taxe=0 ;
+				int id_famille = 0,id_taxe = 0;
 				String famille=cb_famille.getSelectedItem().toString();
 				String taxe=cb_taxe.getSelectedItem().toString();
 				ResultSet rsidfammile=db_fammile.rechercheByNomFamille(famille);
@@ -195,13 +204,22 @@ public class ArticleAjout extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				Article article=new Article(0,reference.getText(),designation.getText(),Float.parseFloat(prixunitaire.getText()), Float.parseFloat(prixTTC.getText()) , Float.parseFloat(QteStock.getText()),Float.parseFloat(QteMin.getText()), codeAbarre.getText(),id_famille,id_taxe);
-				db_article.AjoutArticle(article);
-				
+				artiModifier.setId_famille(id_famille);
+				artiModifier.setId_taxe(id_taxe);
+				artiModifier.setReference(reference.getText());
+				artiModifier.setDesignation(designation.getText());
+				artiModifier.setPrix_unitaire(Float.parseFloat(prixunitaire.getText()));
+				artiModifier.setPrixTTc(Float.parseFloat(prixTTC.getText()));
+				artiModifier.setCodeAbarre(codeAbarre.getText());
+				artiModifier.setQuantiteMin(Float.parseFloat(QteMin.getText()));
+				artiModifier.setQuantiteStock(Float.parseFloat(QteStock.getText()));
+		
+				db_article.ModifierArticle(artiModifier);
+			dispose();	
 			}
 		});
-		btnAjouter.setBounds(346, 309, 89, 34);
-		contentPane.add(btnAjouter);
+		btnModifier.setBounds(346, 309, 89, 34);
+		contentPane.add(btnModifier);
 		
 		JButton btnAnnuler = new JButton("Annuler");
 		btnAnnuler.addActionListener(new ActionListener() {
@@ -213,26 +231,5 @@ public class ArticleAjout extends JFrame {
 		});
 		btnAnnuler.setBounds(474, 309, 96, 34);
 		contentPane.add(btnAnnuler);
-	}
-	class FloatVerifier extends InputVerifier {
-        public boolean verify(JComponent input) {
-	       JTextField tf = (JTextField) input;
-	       String content = tf.getText();
-	       return isValid(content);
-        }
-    }
- 
-public boolean isValid(String s){
-		try{
-		float flo = new Float(s);
-		return true;
-		}
-		catch(NumberFormatException n){
- 
-			JOptionPane.showMessageDialog(null, 
-       	         "Il faut entrer un nombre ",
-       	         "Warning", JOptionPane.WARNING_MESSAGE);
-			return false;
-		}
 	}
 }

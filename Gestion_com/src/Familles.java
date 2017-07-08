@@ -1,11 +1,14 @@
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
 import ControlerPack.ConnectionDataBase;
-import ControlerPack.TaxeBase;
-import ControlerPack.TaxeModel;
+import ControlerPack.FamilleBase;
+import classPack.Famille;
 import classPack.Taxe;
 
 import javax.swing.JScrollPane;
@@ -16,16 +19,19 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 
-public class Taxes extends JFrame implements MouseListener {
-	public TaxeBase db_taxe;
+public class Familles extends JFrame implements MouseListener {
+
 	private JPanel contentPane;
+	FamilleBase db_famille=null;
 	JTable table;
-	
+	/**
+	 * Launch the application.
+	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Taxes frame = new Taxes();
+					Familles frame = new Familles();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,75 +43,84 @@ public class Taxes extends JFrame implements MouseListener {
 	/**
 	 * Create the frame.
 	 */
-	public Taxes()  {
+	public Familles() {
 		
-		setTitle("Taxes");
+		
+		db_famille=new FamilleBase();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 658, 367);
+		setBounds(100, 100, 528, 347);
 		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		 db_taxe=new TaxeBase();
-		 table=new JTable();
-		 
-		table.setModel(db_taxe.mytablemodel);
+		table= new JTable();
+		table.setModel(db_famille.mytablemodel);
 		table.addMouseListener(this);
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(43, 37, 572, 202);
+		scrollPane.setBounds(28, 57, 463, 179);
 		contentPane.add(scrollPane);
 		
-		JButton Ajouter = new JButton("Ajouter");
-		Ajouter.addActionListener(new ActionListener() {
+		JButton btnAjouter = new JButton("Ajouter");
+		btnAjouter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TaxeAjout ta=new TaxeAjout(db_taxe);
-				ta.setVisible(true);
+				FamilleAjout familleAjout=new FamilleAjout(db_famille);
+				familleAjout.setVisible(true);
 			}
 		});
-		Ajouter.setBounds(288, 270, 91, 31);
-		contentPane.add(Ajouter);
+		btnAjouter.setBounds(169, 258, 91, 33);
+		contentPane.add(btnAjouter);
 		
 		JButton btnModifier = new JButton("Modifier");
 		btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.isRowSelected(table.getSelectedRow()))
 				{
-				Taxe taxe= db_taxe.getTaxe((int)db_taxe.mytablemodel.getValueAt(table.getSelectedRow(),0));
-				TaxeModifier tm=new TaxeModifier(db_taxe,taxe);
-				tm.setVisible(true);
+				Famille f1= db_famille.getFamille((int) db_famille.mytablemodel.getValueAt(table.getSelectedRow(),0));
+				FamilleModifier fm=new FamilleModifier(db_famille, f1);
+				fm.setVisible(true);
+			
 			}
-				else
-			{JOptionPane.showMessageDialog(null,"Il faut selectionner une ligne ou bien Double click sur la ligne!","Erreur",JOptionPane.ERROR_MESSAGE);}
-		}});
-		btnModifier.setBounds(404, 270, 91, 31);
+			else
+		{JOptionPane.showMessageDialog(null,"Il faut selectionner une ligne ou bien Double click sur la ligne!","Erreur",JOptionPane.ERROR_MESSAGE);}
+	
+		}
+		});
+		btnModifier.setBounds(268, 258, 91, 33);
 		contentPane.add(btnModifier);
 		
 		JButton btnSupprimer = new JButton("Supprimer");
 		btnSupprimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				if(table.isRowSelected(table.getSelectedRow()))
 				{
-					
-					db_taxe.supprimerTaxe((int)db_taxe.mytablemodel.getValueAt(table.getSelectedRow(),0));
-				}
-				else
-				{JOptionPane.showMessageDialog(null,"Il faut selectionner une ligne!","Erreur",JOptionPane.ERROR_MESSAGE);}
+				
+				db_famille.supprimerFamille((int)db_famille.mytablemodel.getValueAt(table.getSelectedRow(),0));
+				
+			
 			}
+			else
+		{JOptionPane.showMessageDialog(null,"Il faut selectionner une ligne!","Erreur",JOptionPane.ERROR_MESSAGE);}
+	
+		}
+			
 		});
-		btnSupprimer.setBounds(520, 270, 98, 31);
+		btnSupprimer.setBounds(367, 258, 101, 33);
 		contentPane.add(btnSupprimer);
+	
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.getClickCount() == 2){
+if (e.getClickCount() == 2){
 			
-			Taxe taxe= db_taxe.getTaxe(table.getSelectedRow());
-			TaxeModifier tm=new TaxeModifier(db_taxe,taxe);
-			tm.setVisible(true);
+	Famille f1= db_famille.getFamille((int) db_famille.mytablemodel.getValueAt(table.getSelectedRow(),0));
+	FamilleModifier fm=new FamilleModifier(db_famille, f1);
+	fm.setVisible(true);
 		}
 		
 	}
+		
+	
 
 	@Override
 	public void mousePressed(MouseEvent e) {

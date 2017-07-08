@@ -19,7 +19,7 @@ public class ArticleModel extends AbstractTableModel{
 
 	public  ArticleModel (ResultSet rs){
 		
-		
+	
 			try
 			{
 				rsmd=rs.getMetaData();
@@ -144,6 +144,10 @@ public class ArticleModel extends AbstractTableModel{
 		i++;
 		}
 				return i-1;
+		}
+		public Article getArticle(int selectedRow) {
+			int ligne=RechercheBYID(selectedRow);
+			return data.get(ligne);
 		}
 		}
 

@@ -26,7 +26,7 @@ public class TaxeAjout extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TaxeAjout() {
+	public TaxeAjout(TaxeBase db_taxe) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(300, 200, 332, 286);
 		contentPane = new JPanel();
@@ -58,10 +58,10 @@ public class TaxeAjout extends JFrame {
 		JButton btnAjouter = new JButton("Ajouter");
 		btnAjouter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TaxeBase db_taxe=new TaxeBase();
+ 
 				Taxe t=new Taxe(0,textFieldlibelle.getText(),Float.parseFloat(textField_taux.getText()));
 				db_taxe.AjoutTaxe(t);
-				Taxes.model.fireTableDataChanged();
+			
 			}
 		});
 		btnAjouter.setBounds(92, 191, 89, 34);

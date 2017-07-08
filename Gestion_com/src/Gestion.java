@@ -15,6 +15,9 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
+
+import ControlerPack.ConnectionDataBase;
+
 import java.awt.GridLayout;
 import javax.swing.JDesktopPane;
 import java.awt.Window.Type;
@@ -25,6 +28,7 @@ public class Gestion {
 
 	private JFrame frame;
 	JPanel panel,panel1 ;
+	private JDesktopPane desktopPane;
 	/**
 	 * Launch the application.
 	 */
@@ -45,6 +49,7 @@ public class Gestion {
 	 * Create the application.
 	 */
 	public Gestion() {
+		
 		initialize();
 	}
 
@@ -52,9 +57,14 @@ public class Gestion {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
+		ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");
 		frame = new JFrame();
 		frame.setType(Type.POPUP);
-		
+		 desktopPane = new JDesktopPane();
+			desktopPane.setBounds(164, 0, 1198, 685);
+			frame.getContentPane().add(desktopPane);
+			
 		frame.getContentPane().setBackground(new Color(240, 255, 255));
 		frame.getContentPane().setForeground(UIManager.getColor("Button.shadow"));
 		frame.getContentPane().setEnabled(false);
@@ -92,9 +102,21 @@ public class Gestion {
 		mnStructure.add(mntmFournisseurs);
 		
 		JMenuItem mntmFamilles = new JMenuItem("Familles d'articles");
+		mntmFamilles.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Familles famille=new Familles();
+				famille.setVisible(true);
+			}
+		});
 		mnStructure.add(mntmFamilles);
 		
 		JMenuItem mntmArticles = new JMenuItem("Articles");
+		mntmArticles.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArticleInternalFrame aif2=new ArticleInternalFrame();
+				desktopPane.add(aif2);
+			}
+		});
 		mnStructure.add(mntmArticles);
 		
 		JMenuItem mntmTaxes = new JMenuItem("Taxes");
@@ -132,7 +154,7 @@ public class Gestion {
 		Image img=new ImageIcon(this.getClass().getResource("/articles.png")).getImage();
 		Image imgclient=new ImageIcon(this.getClass().getResource("/client.png")).getImage();
 	
-		//panel1.setBounds(101, 0, 771, 528);
+		
 		Image imgfour=new ImageIcon(this.getClass().getResource("/four.png")).getImage();
 		Image imgfac=new ImageIcon(this.getClass().getResource("/facture.png")).getImage();
 		Image imgcom=new ImageIcon(this.getClass().getResource("/commande.png")).getImage();
@@ -209,9 +231,6 @@ public class Gestion {
 		bdevis.setVerticalTextPosition(SwingConstants.BOTTOM);
 		bdevis.setHorizontalTextPosition(SwingConstants.CENTER);
 		
-		JDesktopPane desktopPane = new JDesktopPane();
-		desktopPane.setBounds(164, 0, 1198, 685);
-		frame.getContentPane().add(desktopPane);
 		
 		bdevis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -246,7 +265,7 @@ public class Gestion {
 			public void actionPerformed(ActionEvent e) {
 				ArticleInternalFrame aif=new ArticleInternalFrame();
 				desktopPane.add(aif);
-				//frame.getContentPane().add(new PanelArticle());
+				
 			}
 		});
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

@@ -12,7 +12,7 @@ import classPack.Article;
 import classPack.Famille;
 
 public class FamilleBase {
-FamilleModel mytablemodel;
+ public FamilleModel mytablemodel;
 	public FamilleBase()
 	{
 		mytablemodel=new FamilleModel(affiche());
@@ -77,5 +77,8 @@ FamilleModel mytablemodel;
 	public ResultSet rechercheByIDTaxe(int id)
 	{
 		return ConnectionDataBase.executeQuery("select * from famille where id_taxe="+id);
+	}
+	public Famille getFamille(int id) {
+		return mytablemodel.getFamille(id);
 	}
 }
