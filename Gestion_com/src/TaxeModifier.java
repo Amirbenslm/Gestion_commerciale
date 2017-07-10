@@ -27,7 +27,7 @@ public class TaxeModifier extends JFrame {
 	 * Create the frame.
 	 */
 	public TaxeModifier(TaxeBase db_taxe,Taxe t) {
-		setTitle("Modifier taxe");
+		setTitle("Modifier Taxe");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(300, 200, 332, 286);
 		contentPane = new JPanel();
@@ -52,6 +52,7 @@ public class TaxeModifier extends JFrame {
 		contentPane.add(lblTaux);
 		
 		textField_taux = new JTextField();
+		textField_taux.setInputVerifier(new FloatVerifier());
 		textField_taux.setBounds(118, 110, 125, 30);
 		contentPane.add(textField_taux);
 		textField_taux.setColumns(10);

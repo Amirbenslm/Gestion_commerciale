@@ -246,6 +246,9 @@ public class Gestion {
 		});
 		bpaiement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				PaiementInernelFrame  paiInternelFram =new PaiementInernelFrame();
+				paiInternelFram.setVisible(true);
+				desktopPane.add(paiInternelFram);
 			}
 		});
 		bfourisseur.addActionListener(new ActionListener() {

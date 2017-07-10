@@ -59,7 +59,7 @@ public class ArticleBase {
 	public void supprimerArticle(int id)
 	{String req="delete from article where id_article="+id;
 		int a=ConnectionDataBase.executeUpdate(req);
-		System.out.println(a);
+		
 		if(a<0)
 			JOptionPane.showMessageDialog(null," Supprission echoué!","Erreur",JOptionPane.ERROR_MESSAGE);
 		else{

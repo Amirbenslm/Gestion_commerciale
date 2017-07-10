@@ -7,17 +7,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.TableModel;
 
 import ControlerPack.ArticleBase;
 
-import ControlerPack.ConnectionDataBase;
 import ControlerPack.FamilleBase;
 import ControlerPack.TaxeBase;
 import classPack.Article;
 
 import java.awt.Color;
 import javax.swing.UIManager;
-import java.awt.SystemColor;
 import java.awt.GridLayout;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -56,7 +55,7 @@ public class ArticleModifier extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public  ArticleModifier(ArticleBase db_article,Article a1) {
+	public  ArticleModifier(ArticleBase db_article,Article a1,TableModel rechmodel) {
 		// TODO Auto-generated constructor stub
 	artiModifier=a1;
 		setVisible(true);
@@ -102,6 +101,7 @@ public class ArticleModifier extends JFrame {
 		prixunitaire = new JTextField();
 		panel_1.add(prixunitaire);
 		prixunitaire.setColumns(10);
+		prixunitaire.setInputVerifier(new FloatVerifier());
 		
 		JLabel lblNewLabel_3 = new JLabel("Prix TTC");
 		panel_1.add(lblNewLabel_3);
@@ -109,6 +109,7 @@ public class ArticleModifier extends JFrame {
 		prixTTC = new JTextField();
 		panel_1.add(prixTTC);
 		prixTTC.setColumns(10);
+		prixTTC.setInputVerifier(new FloatVerifier());
 		
 		JLabel lblNewLabel_4 = new JLabel("Code Abarre");
 		panel_1.add(lblNewLabel_4);
@@ -128,6 +129,7 @@ public class ArticleModifier extends JFrame {
 		QteStock = new JTextField();
 		panel_2.add(QteStock);
 		QteStock.setColumns(10);
+		QteStock.setInputVerifier(new FloatVerifier());
 		
 		JLabel lblNewLabel_7 = new JLabel("Quantit\u00E9 minimum");
 		panel_2.add(lblNewLabel_7);
@@ -135,7 +137,7 @@ public class ArticleModifier extends JFrame {
 		QteMin = new JTextField();
 		panel_2.add(QteMin);
 		QteMin.setColumns(10);
-		
+		QteMin.setInputVerifier(new FloatVerifier());
 		JLabel lblNewLabel_8 = new JLabel("Taxe");
 		panel_2.add(lblNewLabel_8);
 		
@@ -215,6 +217,7 @@ public class ArticleModifier extends JFrame {
 				artiModifier.setQuantiteStock(Float.parseFloat(QteStock.getText()));
 		
 				db_article.ModifierArticle(artiModifier);
+				//rechmodel.
 			dispose();	
 			}
 		});

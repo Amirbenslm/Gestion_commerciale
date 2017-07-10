@@ -27,6 +27,7 @@ public class TaxeAjout extends JFrame {
 	 * Create the frame.
 	 */
 	public TaxeAjout(TaxeBase db_taxe) {
+		setTitle("Ajoute Taxe");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(300, 200, 332, 286);
 		contentPane = new JPanel();
@@ -51,6 +52,7 @@ public class TaxeAjout extends JFrame {
 		contentPane.add(lblTaux);
 		
 		textField_taux = new JTextField();
+		textField_taux.setInputVerifier(new FloatVerifier());
 		textField_taux.setBounds(118, 110, 125, 30);
 		contentPane.add(textField_taux);
 		textField_taux.setColumns(10);
