@@ -12,6 +12,7 @@ import javax.swing.table.AbstractTableModel;
 
 import com.mysql.jdbc.ResultSetMetaData;
 
+import classPack.Client;
 import classPack.Fournisseur;
 
 public class FournisseurBase{
@@ -83,13 +84,19 @@ public ResultSet rechercheByVille(String s)
 {
 	return ConnectionDataBase.executeQuery("select * from fournisseur where ville='"+s+"'");
 }
-public void supprimerFourisseur(int id)
-{String req="delete from fournisseur where id_fournisseur="+id;
+ 
+public void supprimerFourisseur(int l)
+{String req="delete from fournisseur where id_fournisseur="+mytablemodel.data.get(l).getId();
 	int a=ConnectionDataBase.executeUpdate(req);
 	if(a<1)
 		JOptionPane.showMessageDialog(null," Supprission echoué!","Erreur",JOptionPane.ERROR_MESSAGE);
 	else
-		mytablemodel.supprimerLigne(id);
+		mytablemodel.supprimerLigne(l);
+}
+
+public Fournisseur getFournisseur(int id) {
+	// TODO Auto-generated method stub
+	return mytablemodel.getFournisseur(id);
 }
 
 

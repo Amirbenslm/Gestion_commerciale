@@ -30,10 +30,11 @@ import java.awt.event.KeyEvent;
 public class Taxes extends JFrame implements MouseListener {
 	public TaxeBase db_taxe;
 	private JPanel contentPane;
-	JTable table;
+public	JTable table;
 	private JTextField textRecherche;
 	JComboBox cb_Recherche;
 	private ResultSet rsrech;
+	private TaxeModel rechercheModel;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -82,8 +83,8 @@ public class Taxes extends JFrame implements MouseListener {
 			public void actionPerformed(ActionEvent e) {
 				if(table.isRowSelected(table.getSelectedRow()))
 				{
-				Taxe taxe= db_taxe.getTaxe((int)db_taxe.mytablemodel.getValueAt(table.getSelectedRow(),0));
-				TaxeModifier tm=new TaxeModifier(db_taxe,taxe);
+				Taxe taxe= db_taxe.getTaxe((int)table.getModel().getValueAt(table.getSelectedRow(),0));
+				TaxeModifier tm=new TaxeModifier(db_taxe,taxe,rechercheModel);
 				tm.setVisible(true);
 			}
 				else
@@ -99,7 +100,7 @@ public class Taxes extends JFrame implements MouseListener {
 				if(table.isRowSelected(table.getSelectedRow()))
 				{
 					
-					db_taxe.supprimerTaxe((int)db_taxe.mytablemodel.getValueAt(table.getSelectedRow(),0));
+					db_taxe.supprimerTaxe((int)table.getModel().getValueAt(table.getSelectedRow(),0));
 				}
 				else
 				{JOptionPane.showMessageDialog(null,"Il faut selectionner une ligne!","Erreur",JOptionPane.ERROR_MESSAGE);}
@@ -135,6 +136,7 @@ public class Taxes extends JFrame implements MouseListener {
 		btnRefresh.setIcon(new ImageIcon(imgrefresh));
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				db_taxe.mytablemodel=new TaxeModel(ConnectionDataBase.executeQuery("select * from taxe"));
 				table.setModel(db_taxe.mytablemodel);
 			}
 		});
@@ -156,8 +158,9 @@ public class Taxes extends JFrame implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2){
 			
-			Taxe taxe= db_taxe.getTaxe(table.getSelectedRow());
-			TaxeModifier tm=new TaxeModifier(db_taxe,taxe);
+			Taxe taxe= db_taxe.getTaxe((int)table.getModel().getValueAt(table.getSelectedRow(),0));
+			TaxeModifier tm=new TaxeModifier(db_taxe,taxe,rechercheModel);
+			
 			tm.setVisible(true);
 		}
 		
@@ -200,9 +203,10 @@ public class Taxes extends JFrame implements MouseListener {
 			}
 			
 			rsrech=ConnectionDataBase.executeQuery(req);
+			rechercheModel=new TaxeModel(rsrech);
 			
-			table.setModel(new TaxeModel(rsrech));
-		
+		db_taxe.mytablemodel=rechercheModel;
+		table.setModel(db_taxe.mytablemodel);
 		
 		
 	

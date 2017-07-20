@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.text.StyledEditorKit.BoldAction;
 
+import classPack.Article;
 import classPack.Client;
 
 public class ClientModel extends AbstractTableModel {
@@ -26,16 +27,16 @@ public class ClientModel extends AbstractTableModel {
 			{
 				nblig++;
 				idclient=rs.getInt(1);
-				nom=rs.getString(2);
-				prenom=rs.getString(3);
-				ncin=rs.getString(4);
+				nom=rs.getString(3);
+				prenom=rs.getString(4);
+				ncin=rs.getString(2);
 				date=rs.getString(5);
 				adr=rs.getString(6);
 				ville=rs.getString(7);
-				m_fiscale=rs.getString(8);
-				reg_comm=rs.getString(9);
-				tel=rs.getString(10);
-				email=rs.getString(11);
+				m_fiscale=rs.getString(10);
+				reg_comm=rs.getString(11);
+				tel=rs.getString(8);
+				email=rs.getString(9);
 				c=new Client(idclient,nom, prenom, ncin, date, adr, ville, m_fiscale, reg_comm, tel, email);
 				data.add(c);
 			}
@@ -72,15 +73,15 @@ public class ClientModel extends AbstractTableModel {
 			if(c==0)
 				{a=cl.getIdClient();
 			return a; }
-				if(c==1)
+				if(c==2)
 				{ch=cl.getNom();
 			return ch;}
 			
-			   if(c==2)
+			   if(c==3)
 				{ch=cl.getPrenom();
 			
 			return ch;}
-			if(c==3)
+			if(c==1)
 				{ch=cl.getCin();
 			return ch;}
 			if(c==4)
@@ -94,19 +95,19 @@ public class ClientModel extends AbstractTableModel {
 			{
 				return cl.getVille();
 			}
-			if(c==7)
+			if(c==9)
 			{
 				return cl.getMatricule_fiscale();
 			}
-			if(c==8)
+			if(c==10)
 			{
 				return cl.getNum_reg_commerciale();
 			}
-			if(c==9)
+			if(c==7)
 			{
 				return cl.getTel();
 			}
-			if(c==10)
+			if(c==8)
 			{
 				return cl.getEmail();
 			}
@@ -145,7 +146,7 @@ public class ClientModel extends AbstractTableModel {
 		public void ajouterLigne(Client c) {
 			
 			
-			
+			System.out.print(c.getTel()+"   "+c.getEmail());
 			data.add(c);
 			nblig++;
 			fireTableDataChanged();
@@ -171,7 +172,10 @@ public class ClientModel extends AbstractTableModel {
 			}
 			return i-1;
 		}
-		
+		public Client getClient(int id) {
+			int ligne=rechercheId(id);
+			return data.get(ligne);
+		}
 
 
 

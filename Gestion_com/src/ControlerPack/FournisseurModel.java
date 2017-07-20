@@ -8,6 +8,7 @@ import javax.swing.table.AbstractTableModel;
 
 import com.mysql.jdbc.ResultSetMetaData;
 
+import classPack.Client;
 import classPack.Fournisseur;
 
 public class FournisseurModel extends AbstractTableModel{
@@ -142,11 +143,16 @@ public class FournisseurModel extends AbstractTableModel{
 	}
 	
 
-public void AfficheData()
-{int i=0;
+   public void AfficheData()
+    {int i=0;
 	while(i<data.size())
 	{System.out.println(data.get(i).getId()+" "+data.get(i).getReference()+"     "+data.get(i).getRason_social()+" "+data.get(i).getAdresse()+"  "+data.get(i).getVille()+"  "+data.get(i).getMatricule_fiscale()+" "+data.get(i).getNum_reg_commerciale()+"  "+data.get(i).getNum_tel() );
-i++;
-}
+    i++;
+    }
+	}
+   
+   public Fournisseur getFournisseur(int id) {
+		int ligne=RechercheBYID(id);
+		return data.get(ligne);
 	}
 }

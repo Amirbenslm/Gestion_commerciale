@@ -36,7 +36,7 @@ public class PaiementModel extends AbstractTableModel{
 	public  PaiementModel(ResultSet rs) {
 		
 			try{
-				InputStream ips=new FileInputStream("test.txt"); 
+				InputStream ips=new FileInputStream("ArticleVendue//test.txt"); 
 				
 				InputStreamReader ipsr=new InputStreamReader(ips);
 				BufferedReader br=new BufferedReader(ipsr);

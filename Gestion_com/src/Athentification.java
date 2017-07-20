@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -8,27 +9,39 @@ import javax.swing.border.EmptyBorder;
 import ControlerPack.ConnectionDataBase;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+
 import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
+
 import java.awt.Color;
+
 import javax.swing.UIManager;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+
 import javax.swing.DropMode;
+import javax.swing.JComboBox;
+
+import java.awt.Window.Type;
 
 public class Athentification extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JPasswordField pwd;
-
+	private JTextField jlogin;
+	private JPasswordField jpwd;
+	ConnectionDataBase cdb=null;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -49,73 +62,112 @@ public class Athentification extends JFrame {
 	 * Create the frame.
 	 */
 	public Athentification() {
-		setTitle("Athentification");
+		setResizable(false);
+		setTitle("Nabeul Soft");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 310);
+		setBounds(450, 200, 450, 310);
+		Image icone = new ImageIcon(this.getClass().getResource("/icone.jpg")).getImage();
+		this.setIconImage(icone);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(169, 169, 169));
+		contentPane.setBackground(new Color(0, 139, 139));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblLogin = new JLabel("Login");
-		lblLogin.setFont(new Font("Shonar Bangla", Font.BOLD, 15));
-		lblLogin.setBounds(162, 77, 67, 24);
-		contentPane.add(lblLogin);
+		JLabel login = new JLabel("Utilisateur");
+		login.setFont(new Font("Shonar Bangla", Font.BOLD, 15));
+		login.setBounds(149, 74, 120, 30);
+		contentPane.add(login);
 		
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setFont(new Font("Shonar Bangla", Font.BOLD, 15));
-		lblPassword.setBounds(162, 115, 67, 30);
-		contentPane.add(lblPassword);
-		
-		textField = new JTextField();
-		textField.setBounds(251, 74, 150, 30);
-		contentPane.add(textField);
-		textField.setColumns(10);
-		
-		pwd = new JPasswordField();
-		pwd.setBounds(251, 115, 150, 30);
+		JLabel pwd = new JLabel("Mot de passe");
+		pwd.setFont(new Font("Shonar Bangla", Font.BOLD, 15));
+		pwd.setBounds(149, 115, 120, 30);
 		contentPane.add(pwd);
 		
-		JLabel lblNewLabel = new JLabel("New label");
+		jlogin = new JTextField();
+		jlogin.setBounds(274, 74, 150, 30);
+		contentPane.add(jlogin);
+		jlogin.setColumns(10);
+		
+		jpwd = new JPasswordField();
+		jpwd.setBounds(274, 117, 150, 30);
+		contentPane.add(jpwd);
 		Image img=new ImageIcon(this.getClass().getResource("/cle.png")).getImage();
-		lblNewLabel.setIcon(new ImageIcon(img));
-		lblNewLabel.setBackground(UIManager.getColor("InternalFrame.inactiveTitleBackground"));
-		lblNewLabel.setBounds(10, 36, 134, 130);
-		contentPane.add(lblNewLabel);
 		
 		JButton connexion = new JButton("Connexion");
+		
+		connexion.setFont(new Font("Tahoma", Font.BOLD, 13));
+		connexion.setForeground(new Color(47, 79, 79));
 		connexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
-				ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");
-				ResultSet rs=ConnectionDataBase.executeQuery("select * from caissier where login='"+textField.getText()+"'");
-				String pwdbase,passwd;
+				String reqconnexion="SELECT * FROM `caissier` WHERE `login`='"+jlogin.getText()+"' and `pwd`='"+jpwd.getText()+"'";
+				//String reqconnexion="select * from caissier where `login`='"+textField.getText()+"' and  `pwd`='"+pwd.getPassword()+"'";
+				ResultSet rs=ConnectionDataBase.executeQuery(reqconnexion);
+				
 				try {if(rs.next())
 					{
-					pwdbase = rs.getString(9);
-					passwd=new String(pwd.getPassword());
-					System.out.println(passwd);
-						if(pwdbase.equals(passwd))
-						{
+					jlogin.setText(""); jpwd.setText("");
+					Gestion g=new Gestion();
+					g.frame.setVisible(true);
+					setVisible(false);
+                    
 							System.out.println("Success connection");
+						
 						}
-						}
+				else	
+					
+				{
+					System.out.println("introuvable!!!");
+					JOptionPane.showMessageDialog(null,"Nom utilisateur ou mot de passe incorrect","Erreur",JOptionPane.ERROR_MESSAGE);
+					jpwd.setText("");
+				}
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		});
-		connexion.setBounds(175, 211, 98, 30);
+		connexion.setBounds(175, 211, 111, 30);
 		contentPane.add(connexion);
 		
-		JButton NewCompte = new JButton("New compte");
+		JButton NewCompte = new JButton("Cr\u00E9er Compte");
+		NewCompte.setFont(new Font("Tahoma", Font.BOLD, 13));
+		NewCompte.setForeground(new Color(47, 79, 79));
 		NewCompte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(e.getSource()==NewCompte)
+				{
+					AjoutCaissier a=new AjoutCaissier();
+					a.setVisible(true);
+				}
 			}
 		});
-		NewCompte.setBounds(296, 211, 105, 30);
+		NewCompte.setBounds(296, 211, 128, 30);
 		contentPane.add(NewCompte);
+		
+		JLabel image = new JLabel("");
+		Image cle=new ImageIcon(this.getClass().getResource("/cle.png")).getImage();
+		image.setIcon(new ImageIcon(cle));
+		image.setBounds(0, 57, 139, 112);
+		contentPane.add(image);
+		 cdb=new ConnectionDataBase();
+		  chargerConnexion();
+		this.addWindowListener(new WindowAdapter() {
+			 public void windowClosing( WindowEvent e)
+			 {
+				 ConnectionDataBase.deconnection();
+			 }
+			 public void windowClosed( WindowEvent e)
+			 {
+				 ConnectionDataBase.deconnection();
+			 } 
+			 
+		}); 
+		
+	}
+	public void chargerConnexion()
+	{
+		ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
+		ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");
 	}
 }

@@ -26,9 +26,13 @@ import javax.swing.JTextField;
 
 public class Gestion {
 
-	private JFrame frame;
+	JFrame frame;
 	JPanel panel,panel1 ;
 	private JDesktopPane desktopPane;
+	private ArticleInternalFrame aif;
+	private ClientInternalFrame f;
+	private FournisseurJInternelFrame fournisinternelframe;
+	protected DevisInternelFrame devisinterframe;
 	/**
 	 * Launch the application.
 	 */
@@ -90,15 +94,78 @@ public class Gestion {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);}
 		});
+		
+		JMenuItem mntmStockMinimum = new JMenuItem("Stock Minimum");
+		mntmStockMinimum.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new StockMinimum().setVisible(true);
+			}
+		});
+		mnNewMenu.add(mntmStockMinimum);
 		mnNewMenu.add(mntmQuitter);
 		
 		JMenu mnStructure = new JMenu("Structure");
 		menuBar.add(mnStructure);
 		
 		JMenuItem mntmClients = new JMenuItem("Clients");
+		mntmClients.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(f!=null)
+				{
+					if(f.isShowing())
+				{
+				f.toFront();
+				
+				}
+				
+					
+					else
+					{
+					
+						 f=new ClientInternalFrame();
+						desktopPane.add(f);
+						f.toFront();
+						
+					}
+					
+			}else
+			{
+				
+				 f=new ClientInternalFrame();
+				desktopPane.add(f);
+				f.toFront();
+				
+			}
+				
+			}
+		});
 		mnStructure.add(mntmClients);
 		
 		JMenuItem mntmFournisseurs = new JMenuItem("Fournisseurs");
+		mntmFournisseurs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(fournisinternelframe!=null)
+				{
+					if(fournisinternelframe.isShowing())
+				
+					{fournisinternelframe.toFront();}
+					else
+					{	
+				  fournisinternelframe=new FournisseurJInternelFrame();
+					
+					desktopPane.add(fournisinternelframe);
+					fournisinternelframe.toFront();
+					}
+					}
+				else
+				{	
+			  fournisinternelframe=new FournisseurJInternelFrame();
+				
+				desktopPane.add(fournisinternelframe);
+				fournisinternelframe.toFront();
+				}
+			}
+		});
 		mnStructure.add(mntmFournisseurs);
 		
 		JMenuItem mntmFamilles = new JMenuItem("Familles d'articles");
@@ -113,8 +180,24 @@ public class Gestion {
 		JMenuItem mntmArticles = new JMenuItem("Articles");
 		mntmArticles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArticleInternalFrame aif2=new ArticleInternalFrame();
-				desktopPane.add(aif2);
+				if(aif!=null)
+				{
+				if(aif.isShowing())
+				
+					{aif.toFront();}
+				else
+					{aif=new ArticleInternalFrame();
+					aif.setVisible(true);
+					desktopPane.add(aif);
+					aif.toFront();
+					}
+			}
+			else
+			{aif=new ArticleInternalFrame();
+			aif.setVisible(true);
+			desktopPane.add(aif);
+			aif.toFront();
+			}
 			}
 		});
 		mnStructure.add(mntmArticles);
@@ -219,6 +302,9 @@ public class Gestion {
 		blivraison.setHorizontalTextPosition(SwingConstants.CENTER);
 		blivraison.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				BonLivraisonInternelFrame bonlivframe=new BonLivraisonInternelFrame();
+				desktopPane.add(bonlivframe);
+			bonlivframe.toFront();
 			}
 		});
 		blivraison.setBackground(SystemColor.controlHighlight);
@@ -234,6 +320,9 @@ public class Gestion {
 		
 		bdevis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				devisinterframe=new DevisInternelFrame();
+				devisinterframe.setVisible(true);
+				desktopPane.add(devisinterframe);
 			}
 		});
 		bcommande.addActionListener(new ActionListener() {
@@ -248,27 +337,92 @@ public class Gestion {
 			public void actionPerformed(ActionEvent e) {
 				PaiementInernelFrame  paiInternelFram =new PaiementInernelFrame();
 				paiInternelFram.setVisible(true);
+			
 				desktopPane.add(paiInternelFram);
+				paiInternelFram.toFront();
 			}
 		});
 		bfourisseur.addActionListener(new ActionListener() {
+			
+
 			public void actionPerformed(ActionEvent e) {
-				ArticleInternalFrame aif2=new ArticleInternalFrame();
-				desktopPane.add(aif2);
+			if(fournisinternelframe!=null)
+			{
+				if(fournisinternelframe.isShowing())
+			
+				{fournisinternelframe.toFront();}
+				else
+				{	
+			  fournisinternelframe=new FournisseurJInternelFrame();
+				
+				desktopPane.add(fournisinternelframe);
+				fournisinternelframe.toFront();
+				}
+				}
+			else
+			{	
+		  fournisinternelframe=new FournisseurJInternelFrame();
+			
+			desktopPane.add(fournisinternelframe);
+			fournisinternelframe.toFront();
+			}
 			}
 		});
 		bclient.addActionListener(new ActionListener() {
+			
+
 			public void actionPerformed(ActionEvent e) {
 				
-			
-			
+				if(f!=null)
+				{
+					if(f.isShowing())
+				{
+				f.toFront();
+				
+				}
+				
+					
+					else
+					{
+					
+						 f=new ClientInternalFrame();
+						desktopPane.add(f);
+						f.toFront();
+						
+					}
+					
+			}else
+			{
+				
+				 f=new ClientInternalFrame();
+				desktopPane.add(f);
+				f.toFront();
+				
 			}
+				}
 		});
 		barticle.addActionListener(new ActionListener() {
+			
+
 			public void actionPerformed(ActionEvent e) {
-				ArticleInternalFrame aif=new ArticleInternalFrame();
-				desktopPane.add(aif);
+			if(aif!=null)
+				{
+				if(aif.isShowing())
 				
+					{aif.toFront();}
+				else
+					{aif=new ArticleInternalFrame();
+					aif.setVisible(true);
+					desktopPane.add(aif);
+					aif.toFront();
+					}
+			}
+			else
+			{aif=new ArticleInternalFrame();
+			aif.setVisible(true);
+			desktopPane.add(aif);
+			aif.toFront();
+			}
 			}
 		});
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

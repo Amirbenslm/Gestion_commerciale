@@ -9,6 +9,7 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 
+import ControlerPack.ConnectionDataBase;
 import ControlerPack.FamilleBase;
 import ControlerPack.TaxeBase;
 import classPack.Famille;
@@ -89,6 +90,15 @@ public class FamilleModifier extends JFrame {
 		}
 		
 		nomfamille.setText(f1.getNom_famille());
+		ResultSet rslabelletaxe=ConnectionDataBase.executeQuery("select libelle from taxe where id_taxe="+f1.getId_taxe());
+		try {
+			rslabelletaxe.next();
+			
+			cb_taxe.setSelectedItem(rslabelletaxe.getString("libelle"));
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}	
 		JButton btnModifier = new JButton("Modifier");
 		btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -17,6 +17,8 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ArticleVendre extends JFrame {
 
@@ -33,7 +35,7 @@ public class ArticleVendre extends JFrame {
 	private JTextField textQteVendu;
 	private JTextField textRemise;
 	private JTextField textTotal;
-	
+	float prixUnitaire,remise,taxecalule,totaleTTc,Qte;
 	/**
 	 * Launch the application.
 	 */
@@ -41,7 +43,7 @@ public class ArticleVendre extends JFrame {
 	private String famille;
 	private ResultSet rechTaxe;
 	private float tauxTaxe;
-	private JTextField textTaxez;
+	private JTextField textTaxeModifier;
 	
 
 	/**
@@ -185,6 +187,13 @@ public class ArticleVendre extends JFrame {
 		panel_1.add(lblQuantit);
 		
 		textQteVendu = new JTextField("1");
+		textQteVendu.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				textTotal.setText(String.valueOf(calculePrixTotale()));
+			}
+		});
+		
 		textQteVendu.setBounds(102, 28, 179, 38);
 		panel_1.add(textQteVendu);
 		textQteVendu.setColumns(10);
@@ -193,7 +202,13 @@ public class ArticleVendre extends JFrame {
 		lblRemi.setBounds(10, 108, 72, 33);
 		panel_1.add(lblRemi);
 		
-		textRemise = new JTextField("0");
+		textRemise = new JTextField("10");
+		textRemise.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				textTotal.setText(String.valueOf(calculePrixTotale()));
+			}
+		});
 		textRemise.setBounds(102, 102, 179, 38);
 		textRemise.setInputVerifier(new FloatVerifier());
 		panel_1.add(textRemise);
@@ -213,9 +228,14 @@ public class ArticleVendre extends JFrame {
 		panel_1.add(textTotal);
 		textTotal.setColumns(10);
 		
-		JButton btnAjouter = new JButton("Ajouter");
-		btnAjouter.setBounds(64, 329, 89, 33);
-		panel_1.add(btnAjouter);
+		
+		JButton btnvendre = new JButton("Vendre");
+		btnvendre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnvendre.setBounds(64, 329, 89, 33);
+		panel_1.add(btnvendre);
 		
 		JButton btnAnnuler = new JButton("Annuler");
 		btnAnnuler.addActionListener(new ActionListener() {
@@ -226,11 +246,32 @@ public class ArticleVendre extends JFrame {
 		btnAnnuler.setBounds(180, 329, 89, 33);
 		panel_1.add(btnAnnuler);
 		
-		textTaxez = new JTextField();
-		textTaxez.setBounds(102, 171, 179, 38);
-		panel_1.add(textTaxez);
-		textTaxez.setText(String.valueOf(tauxTaxe));
-		textTaxez.setColumns(10);
-		textTaxez.setInputVerifier(new FloatVerifier());
+		textTaxeModifier = new JTextField();
+		textTaxeModifier.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				textTotal.setText(String.valueOf(calculePrixTotale()));
+			}
+		});
+		textTaxeModifier.setBounds(102, 171, 179, 38);
+		panel_1.add(textTaxeModifier);
+		textTaxeModifier.setText(String.valueOf(tauxTaxe));
+		textTaxeModifier.setColumns(10);
+		textTaxeModifier.setInputVerifier(new FloatVerifier());
+		textTotal.setText(String.valueOf(calculePrixTotale()));	
+	}
+	public double calculePrixTotale()
+	{/************************ initialisation des Variables de calcule de Prix Totale*************/
+		taxecalule=Float.parseFloat(textTaxeModifier.getText())*Float.parseFloat(textPrixUnitaire.getText())/100;
+		prixUnitaire=Float.parseFloat(textPrixUnitaire.getText());
+		Qte=Float.parseFloat(textQteVendu.getText());
+		
+	
+		totaleTTc=(((prixUnitaire+taxecalule)*Qte));
+	remise=totaleTTc*Float.parseFloat(textRemise.getText())/100;
+	
+	//System.out.println("totaltccc:"+totaleTTc+"=(((prixunitaire:"+prixUnitaire +"+taux:"+taxecalule +")* qte:"+Qte+"  Remise :"+remise);
+	return  totaleTTc-remise;
+		
 	}
 }

@@ -1,5 +1,3 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Image;
 
 import javax.swing.JFrame;
@@ -9,10 +7,8 @@ import javax.swing.border.EmptyBorder;
 
 import ControlerPack.ConnectionDataBase;
 import ControlerPack.FamilleBase;
-import ControlerPack.TaxeModel;
+import ControlerPack.FamilleModel;
 import classPack.Famille;
-import classPack.Taxe;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
@@ -41,6 +37,7 @@ public class Familles extends JFrame implements MouseListener {
 	/**
 	 * Launch the application.
 	 */
+	private FamilleModel rechercheModel;
 
 
 	/**
@@ -80,7 +77,7 @@ public class Familles extends JFrame implements MouseListener {
 			public void actionPerformed(ActionEvent e) {
 				if(table.isRowSelected(table.getSelectedRow()))
 				{
-				Famille f1= db_famille.getFamille((int) db_famille.mytablemodel.getValueAt(table.getSelectedRow(),0));
+				Famille f1= db_famille.getFamille((int) table.getModel().getValueAt(table.getSelectedRow(),0));
 				FamilleModifier fm=new FamilleModifier(db_famille, f1);
 				fm.setVisible(true);
 			
@@ -99,7 +96,7 @@ public class Familles extends JFrame implements MouseListener {
 				if(table.isRowSelected(table.getSelectedRow()))
 				{
 				
-				db_famille.supprimerFamille((int)db_famille.mytablemodel.getValueAt(table.getSelectedRow(),0));
+				db_famille.supprimerFamille((int)table.getModel().getValueAt(table.getSelectedRow(),0));
 				
 			
 			}
@@ -125,7 +122,9 @@ public class Familles extends JFrame implements MouseListener {
 		
 		JButton btnRefresh = new JButton("");
 		btnRefresh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {table.setModel(db_famille.mytablemodel);
+			public void actionPerformed(ActionEvent e) {
+				db_famille.mytablemodel=new FamilleModel(ConnectionDataBase.executeQuery("select * from famille"));
+				table.setModel(db_famille.mytablemodel);
 			}
 		});
 		Image imgrefresh=new ImageIcon(this.getClass().getResource("/Refresh.png")).getImage();
@@ -162,7 +161,7 @@ public class Familles extends JFrame implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 if (e.getClickCount() == 2){
 			
-	Famille f1= db_famille.getFamille((int) db_famille.mytablemodel.getValueAt(table.getSelectedRow(),0));
+	Famille f1= db_famille.getFamille((int)table.getModel().getValueAt(table.getSelectedRow(),0));
 	FamilleModifier fm=new FamilleModifier(db_famille, f1);
 	fm.setVisible(true);
 		}
@@ -207,8 +206,10 @@ if (e.getClickCount() == 2){
 			}
 			
 			rsrech=ConnectionDataBase.executeQuery(req);
+			rechercheModel=new FamilleModel(rsrech);
 			
-			table.setModel(new TaxeModel(rsrech));
+			db_famille.mytablemodel=rechercheModel;
+			table.setModel(db_famille.mytablemodel);
 		
 		
 		

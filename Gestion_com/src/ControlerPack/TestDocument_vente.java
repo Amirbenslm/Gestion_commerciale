@@ -8,6 +8,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -56,7 +59,10 @@ public class TestDocument_vente extends JFrame implements MouseListener{
 			ajout.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Document_vente f=new Document_vente(0,"2012-12-02",1);
+					Date actuelle = new Date();
+					 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					 String dat = dateFormat.format(actuelle);
+					Document_vente f=new Document_vente(0,dat,1);
 					cdb.AjoutDocument_vente(f);
 					ResultSet rech=	cdb.rechercheByID(2);
 				try {

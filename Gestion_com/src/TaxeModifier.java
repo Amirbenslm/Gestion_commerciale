@@ -3,9 +3,12 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.TableModel;
 
 import ControlerPack.TaxeBase;
+import ControlerPack.TaxeModel;
 import classPack.Taxe;
 
 import java.awt.GridLayout;
@@ -25,8 +28,9 @@ public class TaxeModifier extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param rechercheModel 
 	 */
-	public TaxeModifier(TaxeBase db_taxe,Taxe t) {
+	public TaxeModifier(TaxeBase db_taxe,Taxe t, TaxeModel rechercheModel) {
 		setTitle("Modifier Taxe");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(300, 200, 332, 286);
@@ -67,6 +71,8 @@ public class TaxeModifier extends JFrame {
 				t.setLibelle(textFieldlibelle.getText());
 				t.setTaux(Float.parseFloat(textField_taux.getText()));
 				db_taxe.ModifierTaxe(t);
+				rechercheModel.fireTableDataChanged();
+				
 				dispose();
 				
 			}

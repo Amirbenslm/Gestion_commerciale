@@ -12,13 +12,13 @@ import javax.swing.border.TitledBorder;
 import ControlerPack.ArticleBase;
 import ControlerPack.ArticleModel;
 import ControlerPack.ConnectionDataBase;
+import ControlerPack.TaxeModel;
 import classPack.Article;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -50,6 +50,7 @@ public class ArticleInternalFrame extends JInternalFrame implements MouseListene
 	private JComboBox<String> cb_Recherche;
 	private String req,s;
 	ResultSet rsrech;
+	private ArticleModel rechercheModel;
 	/**
 	 * Create the frame.
 	 */
@@ -107,6 +108,9 @@ public class ArticleInternalFrame extends JInternalFrame implements MouseListene
 		btnReturn.setIcon(new ImageIcon(imgrefresh));
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				db_article.mytablemodel=new ArticleModel(ConnectionDataBase.executeQuery("select *from article"));
 				table.setModel(db_article.mytablemodel);
 			}
 		});
@@ -257,8 +261,10 @@ panel.add(btnVendre);
 			{ req = "select * from article where  id_taxe="+Float.parseFloat(s);
 			}
 			rsrech=ConnectionDataBase.executeQuery(req);
+			rechercheModel=new ArticleModel(rsrech);
 			
-			table.setModel(new ArticleModel(rsrech));
+			db_article.mytablemodel=rechercheModel;
+			table.setModel(db_article.mytablemodel);
 		
 		
 		

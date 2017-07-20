@@ -10,7 +10,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 
 import ControlerPack.ArticleBase;
-
+import ControlerPack.ConnectionDataBase;
 import ControlerPack.FamilleBase;
 import ControlerPack.TaxeBase;
 import classPack.Article;
@@ -56,6 +56,8 @@ public class ArticleModifier extends JFrame {
 	 * Create the frame.
 	 */
 	public  ArticleModifier(ArticleBase db_article,Article a1,TableModel rechmodel) {
+		ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
+		ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");
 		// TODO Auto-generated constructor stub
 	artiModifier=a1;
 		setVisible(true);
@@ -180,6 +182,25 @@ public class ArticleModifier extends JFrame {
 		QteMin.setText(String.valueOf(a1.getQuantiteMin()));
 		QteStock.setText(String.valueOf(a1.getQuantiteStock()));
 		codeAbarre.setText(a1.getCodeAbarre());
+	ResultSet rsnomfamille=ConnectionDataBase.executeQuery("select nom_famille from famille where id_famille="+a1.getId_famille());
+	try {
+		rsnomfamille.next();
+		
+		cb_famille.setSelectedItem(rsnomfamille.getString("nom_famille"));
+	} catch (SQLException e2) {
+		// TODO Auto-generated catch block
+		e2.printStackTrace();
+	}	
+	ResultSet rslabelletaxe=ConnectionDataBase.executeQuery("select libelle from taxe where id_taxe="+a1.getId_taxe());
+	try {
+		rslabelletaxe.next();
+		
+		cb_taxe.setSelectedItem(rslabelletaxe.getString("libelle"));
+	} catch (SQLException e2) {
+		// TODO Auto-generated catch block
+		e2.printStackTrace();
+	}	
+	
 		JButton btnModifier = new JButton("Modifier");
 		btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -217,7 +238,7 @@ public class ArticleModifier extends JFrame {
 				artiModifier.setQuantiteStock(Float.parseFloat(QteStock.getText()));
 		
 				db_article.ModifierArticle(artiModifier);
-				//rechmodel.
+				
 			dispose();	
 			}
 		});

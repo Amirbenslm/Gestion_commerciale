@@ -112,8 +112,9 @@ public class TaxeModel extends AbstractTableModel{
 	}
 			return i-1;
 	}
-	public Taxe getLigne(int ligne)
-	{return data.get(ligne);
+	public Taxe getLigne(int id)
+	{int ligne=RechercheBYID(id);
+		return data.get(ligne);
 		
 	}
 

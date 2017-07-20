@@ -1,5 +1,9 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -46,5 +50,17 @@ public class Paiement extends JFrame {
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(77, 49, 515, 217);
 		contentPane.add(scrollPane);
+		Date d=new Date();
+		System.out.println( d.getDay()+"/"+d.getMonth()+"/"+d.getYear());
+		Calendar c = Calendar.getInstance ();
+		Date d1 = c.getTime ();
+		System.out.println(d1);
+		Date d11=new Date();
+		System.out.println(d11.getDate()+" / "+(d11.getMonth()+1)+" / "+(d11.getYear()+1900));
+		Date actuelle = new Date();
+		 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		 String dat = dateFormat.format(actuelle);
+		 System.out.println("======================");
+		 System.out.println(dat);
 	}
 }

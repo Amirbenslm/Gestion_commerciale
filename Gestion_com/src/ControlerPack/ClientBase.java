@@ -15,13 +15,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 
+import classPack.Article;
 import classPack.Client;
 
 
 
 public class ClientBase {
 	
-	ClientModel cm=null;
+	public ClientModel cm=null;
 	public ClientBase( ResultSet rs)
 	{
 		
@@ -105,6 +106,11 @@ public class ClientBase {
        cm.ModifierLigne(c);
         
       
+	}
+	
+	public Client getClient(int id) {
+		// TODO Auto-generated method stub
+		return cm.getClient(id);
 	}
 	
 }
