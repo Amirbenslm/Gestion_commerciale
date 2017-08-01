@@ -56,8 +56,8 @@ public class ArticleInternalFrame extends JInternalFrame implements MouseListene
 	 */
 	public ArticleInternalFrame() {
 		setTitle("Article");
-		ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
-		ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");
+		//ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
+		//ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");
 		 db_article=new ArticleBase();
 		setBounds(100, 100, 450, 300);
 		this.setBorder(null);
@@ -188,21 +188,6 @@ btnNewButton_3.addActionListener(new ActionListener() {
 btnNewButton_3.setBounds(214, 3, 108, 74);
 panel.add(btnNewButton_3);
 btnNewButton_3.setBackground(SystemColor.controlHighlight);
-JButton btnVendre = new JButton("Vendre");
-btnVendre.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-		if(table.isRowSelected(table.getSelectedRow()))
-		{		
-			Article art1= db_article.getArticle((int)table.getModel().getValueAt(table.getSelectedRow(),0));
-		ArticleVendre articlevendu=new ArticleVendre(art1);
-		articlevendu.setVisible(true);
-	}else
-	{JOptionPane.showMessageDialog(null,"Il faut selectionner une ligne!","Erreur",JOptionPane.ERROR_MESSAGE);}
-}
-});
-btnVendre.setBackground(SystemColor.controlHighlight);
-btnVendre.setBounds(320, 3, 108, 74);
-panel.add(btnVendre);
 
 	}
 

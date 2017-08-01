@@ -27,7 +27,7 @@ TicketBase cdb=null;
 	{
 		ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
 		ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");
-	
+		 
 		this.setTitle("gestion des Tickets");
 	    this.setSize(1300,500);
 		 this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

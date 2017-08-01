@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
 import classPack.Devis;
+import classPack.Facture;
 
 
 
@@ -124,6 +125,10 @@ public class DevisModel extends AbstractTableModel{
 			return i-1;
 	}
 	
-
+	public Devis getDevis(int id) {
+		int ligne=RechercheBYID(id);
+		return data.get(ligne);
+		
+	}
 	
 }

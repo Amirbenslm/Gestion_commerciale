@@ -5,6 +5,7 @@ import javax.swing.border.TitledBorder;
 
 import ControlerPack.ConnectionDataBase;
 import classPack.Article;
+import classPack.Ligne_vente;
 
 import java.awt.SystemColor;
 import java.sql.ResultSet;
@@ -49,10 +50,10 @@ public class ArticleVendre extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ArticleVendre(Article article) {
+	public ArticleVendre(Ligne_vente lignevente) {
 				setTitle("Vendre Article");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 651, 448);
+		setBounds(480,100, 651, 448);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -150,7 +151,7 @@ public class ArticleVendre extends JFrame {
 		textCodeAbarre.setBounds(91, 345, 191, 29);
 		panel.add(textCodeAbarre);
 		textCodeAbarre.setColumns(10);
-		 rechFamille=ConnectionDataBase.executeQuery("select * from famille where id_famille="+article.getId_famille());
+		 rechFamille=ConnectionDataBase.executeQuery("select * from famille where id_famille="+lignevente.getarticle().getId_famille());
 		try {
 			rechFamille.next();
 			 famille=rechFamille.getString(2);
@@ -158,7 +159,7 @@ public class ArticleVendre extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 rechTaxe=ConnectionDataBase.executeQuery("select * from taxe where id_taxe="+article.getId_taxe());
+		 rechTaxe=ConnectionDataBase.executeQuery("select * from taxe where id_taxe="+lignevente.getarticle().getId_taxe());
 			try {
 				rechTaxe.next();
 				 tauxTaxe=rechTaxe.getFloat(3);
@@ -166,13 +167,13 @@ public class ArticleVendre extends JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		textDesignation.setText(article.getDesignation());
-		textReference.setText(article.getReference());
-		textPrixUnitaire.setText( String.valueOf(article.getPrix_unitaire()));
-		textPrixTTC.setText( String.valueOf(article.getPrixTTc()));
-		textQteStock.setText(String.valueOf(article.getQuantiteStock()));
-		textQteMin.setText(String.valueOf(article.getQuantiteMin()));
-		textCodeAbarre.setText(article.getCodeAbarre());
+		textDesignation.setText(lignevente.getarticle().getDesignation());
+		textReference.setText(lignevente.getarticle().getReference());
+		textPrixUnitaire.setText( String.valueOf(lignevente.getarticle().getPrix_unitaire()));
+		textPrixTTC.setText( String.valueOf(lignevente.getarticle().getPrixTTc()));
+		textQteStock.setText(String.valueOf(lignevente.getarticle().getQuantiteStock()));
+		textQteMin.setText(String.valueOf(lignevente.getarticle().getQuantiteMin()));
+		textCodeAbarre.setText(lignevente.getarticle().getCodeAbarre());
 		textFamille.setText(famille);
 		textTaxe.setText(String.valueOf(tauxTaxe));
 		

@@ -29,7 +29,7 @@ public class FactureBase{
 
 
 	}
-public boolean AjoutFacture(Facture f1)
+public Facture AjoutFacture(Facture f1)
 {String req="INSERT INTO Facture(ref_facture,retour_source,t_fiscale,fodec,id_doc_vente) VALUES('"+f1.getReference()+"','"+f1.getRetour_source()+"','"+f1.getTaxe_fiscale()+"','"+f1.getFodec()+"','"+f1.getId_doc_vente()+"')";
 String exsist="select * from Facture where ref_facture='"+f1.getReference()+"'"+"and retour_source='"+f1.getRetour_source()+"'"+"and t_fiscale='"+f1.getTaxe_fiscale()+"'"+"and fodec='"+f1.getFodec()+"'"+"and id_doc_vente='"+f1.getId_doc_vente()+"'";
 String rech="select max(id_facture) from facture where ref_facture='"+f1.getReference()+"'"+"and retour_source='"+f1.getRetour_source()+"'"+"and t_fiscale='"+f1.getTaxe_fiscale()+"'"+"and fodec='"+f1.getFodec()+"'"+"and id_doc_vente='"+f1.getId_doc_vente()+"'";
@@ -50,12 +50,12 @@ try {
 	e1.printStackTrace();
 }
 
-	return true;
+	return f1;
 }
 
 
 public int ModifierFacture(Facture f1)
-{String req="update  facture set ref_facture='"+f1.getReference()+"',retour_source ='"+f1.getRetour_source()+"',t_fiscale='"+f1.getTaxe_fiscale()+"',fodec='"+f1.getFodec()+"',id_doc_vente='"+f1.getId_doc_vente()+"' where id_facture="+f1.getId_facture();	
+{String req="update  facture set ref_facture='"+f1.getReference()+"',retour_source ='"+f1.getRetour_source()+"',t_fiscale='"+f1.getTaxe_fiscale()+"',fodec='"+f1.getFodec()+"' where id_facture="+f1.getId_facture();	
  int x=ConnectionDataBase.executeUpdate(req);
 mytablemodel.ModifierLigne(f1);
  if (x>0)

@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 
+import classPack.Article;
 import classPack.Ligne_vente;
 
 
@@ -57,7 +58,7 @@ public class TestLigne_vente extends JFrame implements MouseListener{
 			ajout.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Ligne_vente f=new Ligne_vente(4, 5, 10, 15, 1, 17);
+					Ligne_vente f=new Ligne_vente(4, 5, 10, 15, 1,new Article(0, "reference", "designation", 5,1,6,5,"codeAbarre",1, 1));
 					cdb.AjoutLigne_vente(f);
 					ResultSet rech=	cdb.rechercheByID(1);
 				try {
@@ -76,8 +77,8 @@ public class TestLigne_vente extends JFrame implements MouseListener{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Ligne_vente f=new Ligne_vente(2, 15, 15, 15, 1, 17);
-					cdb.ModifierLigne_vente(f);
+					//Ligne_vente f=new Ligne_vente(2, 15, 15, 15, 1, 17);
+					//cdb.ModifierLigne_vente(f);
 					}
 			});
 			this.setLayout(null);

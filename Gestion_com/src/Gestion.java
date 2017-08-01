@@ -23,6 +23,7 @@ import javax.swing.JDesktopPane;
 import java.awt.Window.Type;
 
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 public class Gestion {
 
@@ -33,6 +34,7 @@ public class Gestion {
 	private ClientInternalFrame f;
 	private FournisseurJInternelFrame fournisinternelframe;
 	protected DevisInternelFrame devisinterframe;
+	private  FactureInternelFrame factureinterframe ;
 	/**
 	 * Launch the application.
 	 */
@@ -81,13 +83,13 @@ public class Gestion {
 		JMenu mnNewMenu = new JMenu("Fichier");
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("A propos Entreprise");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
+		JMenuItem mntmaProposEntreprise = new JMenuItem("A propos Entreprise");
+		mntmaProposEntreprise.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new Infos_Entreprise();
 			}
 		});
-		mnNewMenu.add(mntmNewMenuItem);
+		mnNewMenu.add(mntmaProposEntreprise);
 		
 		JMenuItem mntmQuitter = new JMenuItem("Quitter");
 		mntmQuitter.addActionListener(new ActionListener() {
@@ -102,6 +104,17 @@ public class Gestion {
 			}
 		});
 		mnNewMenu.add(mntmStockMinimum);
+		
+		JMenuItem mntmRechercher = new JMenuItem("Rechercher");
+		mntmRechercher.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Rechercher().setVisible(true);
+			}
+		});
+		mnNewMenu.add(mntmRechercher);
+		mntmaProposEntreprise.setAccelerator(KeyStroke.getKeyStroke("F1"));
+		mntmStockMinimum.setAccelerator(KeyStroke.getKeyStroke("F2"));
+		mntmRechercher.setAccelerator(KeyStroke.getKeyStroke("F3"));
 		mnNewMenu.add(mntmQuitter);
 		
 		JMenu mnStructure = new JMenu("Structure");
@@ -215,6 +228,12 @@ public class Gestion {
 		menuBar.add(mnTraitement);
 		
 		JMenuItem mntmDocumentsVentes = new JMenuItem("Documents ventes");
+		mntmDocumentsVentes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Document_VenteFrame docVenteFrame =new Document_VenteFrame();
+				docVenteFrame.setVisible(true);
+			}
+		});
 		mnTraitement.add(mntmDocumentsVentes);
 		
 		JMenuItem mntmDocumentsAchats = new JMenuItem("Documents achats");
@@ -320,10 +339,38 @@ public class Gestion {
 		
 		bdevis.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(devisinterframe!=null)
+				{
+					if(devisinterframe.isShowing())
+				{
+						devisinterframe.toFront();
+				
+				}
+				
+					
+					else
+					{
+						devisinterframe=new DevisInternelFrame();
+						devisinterframe.setVisible(true);
+						desktopPane.add(devisinterframe);
+						devisinterframe.toFront();
+						
+					}
+					
+			}else
+			{
 				devisinterframe=new DevisInternelFrame();
 				devisinterframe.setVisible(true);
 				desktopPane.add(devisinterframe);
+				devisinterframe.toFront();
+				
 			}
+				
+			}
+				
+				
+				
+			
 		});
 		bcommande.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -331,6 +378,34 @@ public class Gestion {
 		});
 		bfacture.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(factureinterframe!=null)
+				{
+					if(factureinterframe.isShowing())
+				{
+						factureinterframe.toFront();
+				
+				}
+				
+					
+					else
+					{
+						factureinterframe=new FactureInternelFrame();
+						factureinterframe.setVisible(true);
+						desktopPane.add(factureinterframe);
+						factureinterframe.toFront();
+						
+					}
+					
+			}else
+			{
+				factureinterframe=new FactureInternelFrame();
+				factureinterframe.setVisible(true);
+				desktopPane.add(factureinterframe);
+				factureinterframe.toFront();
+				
+			}
+				
+			
 			}
 		});
 		bpaiement.addActionListener(new ActionListener() {

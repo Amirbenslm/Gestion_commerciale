@@ -9,7 +9,11 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
+import javax.swing.border.LineBorder;
+import java.awt.SystemColor;
 
 public class DevisInternelFrame extends JInternalFrame {
 
@@ -48,21 +52,57 @@ public class DevisInternelFrame extends JInternalFrame {
 		table=new JTable();
 		table.setModel(db_devis.mytablemodel);
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(10, 108, 1178, 381);
+		scrollPane.setBounds(10, 104, 1178, 454);
 		getContentPane().add(scrollPane);
-		
+		table.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount()==2)
+				{
+					new DevisModifier(db_devis.mytablemodel.getDevis((int)db_devis.mytablemodel.getValueAt(table.getSelectedRow(), 0))).setVisible(true);;
+				}
+				
+			}
+		});
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 15, 1178, 78);
+		panel.setBorder(new LineBorder(SystemColor.textHighlight));
+		panel.setBounds(10, 2, 1178, 91);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JButton btnNouveau = new JButton("Nouveau");
 		btnNouveau.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new DevisNouveau().setVisible(true);
+				new DevisNouveau(db_devis).setVisible(true);
 			}
 		});
-		btnNouveau.setBounds(0, 11, 123, 56);
+		btnNouveau.setBounds(2, 6, 123, 80);
+		btnNouveau.setBackground(SystemColor.controlHighlight); 
 		panel.add(btnNouveau);
 		this.setVisible(true);
 

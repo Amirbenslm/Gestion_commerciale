@@ -18,9 +18,9 @@ public class Document_venteBase{
 		mytablemodel=new Document_venteModel(ConnectionDataBase.executeQuery("select * from Document_vente"));
 
 	}
-public boolean AjoutDocument_vente(Document_vente f1)
-{String req="INSERT INTO Document_vente(date_documentV,id_client) VALUES('"+f1.getDate_doccumentV()+"',"+f1.getId_client()+")";
-String rech="select max(id_documentV) from Document_vente where date_documentV='"+f1.getDate_doccumentV()+"' and id_client="+f1.getId_client();
+public Document_vente AjoutDocument_vente(Document_vente f1)
+{String req="INSERT INTO Document_vente(date_documentV,type_doc) VALUES('"+f1.getDate_doccumentV()+"','"+f1.getType_doc()+"')";
+String rech="select max(id_documentV) from Document_vente where date_documentV='"+f1.getDate_doccumentV()+"' and type_doc='"+f1.getType_doc()+"'";
 
 try {
 	ConnectionDataBase.executeUpdate(req);
@@ -37,12 +37,12 @@ try {
 	e1.printStackTrace();
 }
 
-	return true;
+	return f1;
 }
 
 
 public int ModifierDocument_vente(Document_vente f1)
-{String req="update  Document_vente set date_documentV='"+f1.getDate_doccumentV()+"', id_client="+f1.getId_client()+" where id_documentV="+f1.getId_documentV();	
+{String req="update  Document_vente set date_documentV='"+f1.getDate_doccumentV()+"', id_client="+f1.getId_client()+", type_doc='"+f1.getType_doc()+"' where id_documentV="+f1.getId_documentV();	
  int x=ConnectionDataBase.executeUpdate(req);
 
  if (x>0)
@@ -70,6 +70,11 @@ public void supprimerDocument_vente(int id)
 		JOptionPane.showMessageDialog(null," Supprission echoué!","Erreur",JOptionPane.ERROR_MESSAGE);
 	else
 		mytablemodel.supprimerLigne(id);
+}
+public Document_vente getDocument(int id) {
+	
+	
+	return mytablemodel.getDoc(id);
 }
 
 

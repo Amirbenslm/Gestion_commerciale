@@ -23,13 +23,13 @@ public class Ligne_venteBase{
 	public Ligne_venteBase()
 	{
 		
-		mytablemodel=new Ligne_venteModel(ConnectionDataBase.executeQuery("select * from Ligne_vente"));
+		mytablemodel=new Ligne_venteModel();
 
 
 	}
-public boolean AjoutLigne_vente(Ligne_vente f1)
-{String req="INSERT INTO Ligne_vente(quantite,remise,prix,id_doc_vente,id_article) VALUES("+f1.getQuantite()+","+f1.getRemise()+","+f1.getPrix()+","+f1.getId_doc_vente()+","+f1.getId_article()+")";
-String rech="select max(id_ligneVente) from Ligne_vente where quantite="+f1.getQuantite()+" and remise="+f1.getRemise()+" and prix="+f1.getPrix()+" and id_doc_vente="+f1.getId_doc_vente()+" and id_article="+f1.getId_article();
+public Ligne_vente AjoutLigne_vente(Ligne_vente f1)
+{String req="INSERT INTO Ligne_vente(quantite,remise,prix,id_doc_vente,id_article) VALUES("+f1.getQuantite()+","+f1.getRemise()+","+f1.getPrix()+","+f1.getId_doc_vente()+","+f1.getarticle().getId_article()+")";
+String rech="select max(id_ligneVente) from Ligne_vente where quantite="+f1.getQuantite()+" and remise="+f1.getRemise()+" and prix="+f1.getPrix()+" and id_doc_vente="+f1.getId_doc_vente()+" and id_article="+f1.getarticle().getId_article();
 
 try {
 	ConnectionDataBase.executeUpdate(req);
@@ -46,12 +46,12 @@ try {
 	e1.printStackTrace();
 }
 
-	return true;
+	return f1;
 }
 
 
 public int ModifierLigne_vente(Ligne_vente f1)
-{String req="update  Ligne_vente set quantite="+f1.getQuantite()+",remise="+f1.getRemise()+",id_doc_vente="+f1.getId_doc_vente()+",prix="+f1.getPrix()+",id_article="+f1.getId_article()+" where id_ligneVente="+f1.getId_ligneVente();	
+{String req="update  Ligne_vente set quantite="+f1.getQuantite()+",remise="+f1.getRemise()+",id_doc_vente="+f1.getId_doc_vente()+",prix="+f1.getPrix()+",id_article="+f1.getarticle().getId_article()+" where id_ligneVente="+f1.getId_ligneVente();	
  int x=ConnectionDataBase.executeUpdate(req);
 mytablemodel.ModifierLigne(f1);
  if (x>0)

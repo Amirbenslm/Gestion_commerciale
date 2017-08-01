@@ -62,7 +62,7 @@ public class TestDocument_vente extends JFrame implements MouseListener{
 					Date actuelle = new Date();
 					 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 					 String dat = dateFormat.format(actuelle);
-					Document_vente f=new Document_vente(0,dat,1);
+					Document_vente f=new Document_vente(0,dat,"BL",1);
 					cdb.AjoutDocument_vente(f);
 					ResultSet rech=	cdb.rechercheByID(2);
 				try {
@@ -81,7 +81,7 @@ public class TestDocument_vente extends JFrame implements MouseListener{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Document_vente f=new Document_vente(1,"12-02-03",1);
+					Document_vente f=new Document_vente(1,"12-02-03","F",1);
 					cdb.ModifierDocument_vente(f);
 					}
 			});

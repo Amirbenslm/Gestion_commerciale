@@ -4,8 +4,8 @@ public class Article {
 	private int id_article;
 	private String reference;
 	private String designation;
-	private float prix_unitaire;
-	private float prixTTc;
+	private double prix_unitaire;
+	private double prixTTc;
 	private float quantiteStock;
 	private float quantiteMin;
 	private String codeAbarre;
@@ -18,14 +18,14 @@ public class Article {
 	public void setId_article(int id_article) {
 		this.id_article = id_article;
 	}
-	public Article(int id_article, String reference, String designation, float prix_unitaire, float prixTTc,
+	public Article(int id_article, String reference, String designation, double d, double e,
 			float qte_stock, float qte_min, String codeAbarre, int id_famille, int id_taxe) {
 		super();
 		this.id_article = id_article;
 		this.reference = reference;
 		this.designation = designation;
-		this.prix_unitaire=prix_unitaire;
-		this.prixTTc = prixTTc;
+		this.prix_unitaire=d;
+		this.prixTTc = e;
 		this.quantiteStock = qte_stock;
 		this.quantiteMin = qte_min;
 		this.codeAbarre = codeAbarre;
@@ -45,7 +45,7 @@ public class Article {
 		this.designation = designation;
 	}
 
-	public float getPrixTTc() {
+	public double getPrixTTc() {
 		return prixTTc;
 	}
 	public void setPrixTTc(float prixTTc) {
@@ -81,7 +81,7 @@ public class Article {
 	public void setId_taxe(int id_taxe) {
 		this.id_taxe = id_taxe;
 	}
-	public float getPrix_unitaire() {
+	public double getPrix_unitaire() {
 		return prix_unitaire;
 	}
 	public void setPrix_unitaire(float prix_unitaire) {

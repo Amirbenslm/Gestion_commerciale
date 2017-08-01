@@ -11,6 +11,7 @@ import classPack.Document_vente;
 public class Document_venteModel extends AbstractTableModel{
 		private int id_documentV ;
 		private String date_doccumentV;
+		private String type_doc;
 		private int id_client;
 		
 int nblig;
@@ -26,9 +27,10 @@ Document_vente c;
 				nblig++;
 				id_documentV=rs.getInt(1);
 				date_doccumentV=rs.getString(2);
-				id_client=rs.getInt(3);
+				type_doc=rs.getString(3);
+				id_client=rs.getInt(4);
 				
-				c=new  Document_vente(id_documentV,date_doccumentV,id_client);
+				c=new  Document_vente(id_documentV,date_doccumentV,type_doc,id_client);
 				data.add(c);
 			}
 		}
@@ -61,8 +63,10 @@ Document_vente c;
 		  }
 			if(c==1)
 			{return cl.getDate_doccumentV();	}
+			if(c==2)
+			{return cl.getType_doc();	}
 			
-		   if(c==2)
+		   if(c==3)
 			{return cl.getId_client();}
 		
 		
@@ -114,6 +118,11 @@ Document_vente c;
 	i++;
 	}
 			return i-1;
+	}
+	public Document_vente getDoc(int id) {
+		int ligne=RechercheBYID(id);
+		return data.get(ligne);
+		
 	}
 	
 

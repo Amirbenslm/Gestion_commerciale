@@ -66,9 +66,20 @@ public class ArticleBase {
 	mytablemodel.supprimerLigne(id);
 }
 	}
-public ResultSet rechercheByID(int id)
+public Article rechercheByID(int id)
 	{
-		return ConnectionDataBase.executeQuery("select * from article where id_article="+id);
+	ResultSet rsarticle=ConnectionDataBase.executeQuery("select * from article where id_article="+id);
+		Article article = null;
+		try {
+			rsarticle.next();
+			article = new Article(rsarticle.getInt(1),rsarticle.getString(2),rsarticle.getString(3),rsarticle.getDouble(4),rsarticle.getDouble(5),rsarticle.getFloat(6),rsarticle.getFloat(7),rsarticle.getString(8),rsarticle.getInt(9),rsarticle.getInt(10));
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return article;
+	
 	}
 	public ResultSet rechercheByReference(String s)
 	{

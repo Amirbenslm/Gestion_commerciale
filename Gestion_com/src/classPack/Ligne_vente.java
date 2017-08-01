@@ -4,17 +4,17 @@ public class Ligne_vente {
 	private int id_ligneVente ;
 	private float quantite;
 	private float remise;
-	private float prix  ;
+	private double prix  ;
 	private int id_doc_vente;
-	private int id_article ;
+	private Article article ;
 	
-	public Ligne_vente(int id_ligneVente, float quantite, float remise, float prix, int id_doc_vente, int id_article) {
+	public Ligne_vente(int id_ligneVente, float quantite, float remise, double d, int id_doc_vente, Article article) {
 		this.id_ligneVente = id_ligneVente;
 		this.quantite = quantite;
 		this.remise = remise;
-		this.prix = prix;
+		this.prix = d;
 		this.id_doc_vente = id_doc_vente;
-		this.id_article = id_article;
+		this.article = article;
 	}
 	public float getQuantite() {
 		return quantite;
@@ -28,10 +28,10 @@ public class Ligne_vente {
 	public void setRemise(float remise) {
 		this.remise = remise;
 	}
-	public float getPrix() {
+	public double getPrix() {
 		return prix;
 	}
-	public void setPrix(float prix) {
+	public void setPrix(double prix) {
 		this.prix = prix;
 	}
 	public int getId_doc_vente() {
@@ -40,11 +40,11 @@ public class Ligne_vente {
 	public void setId_doc_vente(int id_doc_vente) {
 		this.id_doc_vente = id_doc_vente;
 	}
-	public int getId_article() {
-		return id_article;
+	public Article getarticle() {
+		return article;
 	}
-	public void setId_article(int id_article) {
-		this.id_article = id_article;
+	public void setarticle(Article article) {
+		this.article = article;
 	}
 	public int getId_ligneVente() {
 		return id_ligneVente;

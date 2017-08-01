@@ -1,100 +1,120 @@
 package ControlerPack;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import javax.swing.table.AbstractTableModel;
 
+import com.mysql.jdbc.ResultSetMetaData;
 
+import classPack.Article;
+import classPack.ArticleVendue;
+import classPack.Facture;
 import classPack.Ligne_vente;
 
 
 
 public class Ligne_venteModel extends AbstractTableModel{
 	int nblig;
-	 int id_ligneVente ;
-	 float quantite;
-	 float remise;
-	 float prix  ;
-	 int id_doc_vente;
-	 int id_article ;
-	 Ligne_vente c;
-	private java.sql.ResultSetMetaData rsmd;
+	private	int id_article ;
+	private	String designation;
+	private	double prix ;
+	private	double quantite;
+	private	double remise ;
+	private	double taxe ;
+	
+	
 	ArrayList <Ligne_vente> data=new ArrayList<Ligne_vente>();
-	public Ligne_venteModel(ResultSet rs) {
-		try
-		{
-			rsmd=rs.getMetaData();
-			while(rs.next())
+	private String ligne;
+	
+	public  Ligne_venteModel() {
+		
+	/*		try{
+				InputStream ips=new FileInputStream("ArticleVendue//test.txt"); 
+				
+				InputStreamReader ipsr=new InputStreamReader(ips);
+				BufferedReader br=new BufferedReader(ipsr);
+			//rsmd=rs.getMetaData();
+			while((ligne=br.readLine())!=null)
 			{
 				nblig++;
-				id_ligneVente=rs.getInt(1);
-				quantite=rs.getFloat(2);
-				remise=rs.getFloat(3);
-				prix=rs.getFloat(4);
-				id_doc_vente=rs.getInt(5);
-				id_article=rs.getInt(6);
-				
-				c=new Ligne_vente(id_ligneVente, quantite, remise, prix, id_doc_vente, id_article);
+				 st = new StringTokenizer(ligne,"***");
+				id_article=Integer.parseInt(st.nextToken());
+				designation=st.nextToken();
+				prix=Double.parseDouble(st.nextToken());
+				quantite=Double.parseDouble(st.nextToken());
+				remise=Double.parseDouble(st.nextToken());
+				taxe=Double.parseDouble(st.nextToken());
+				c=new ArticleVendue(id_article, designation, prix, quantite, remise, taxe);
 				data.add(c);
 			}
+			br.close(); 
 		}
-		catch(SQLException e)
+		catch(NumberFormatException | IOException e)
 		{
 			e.printStackTrace();
+		}*/
 		}
-		
-	}
+	
 	@Override
 	public int getRowCount() {
 		return nblig;
 	}
 	@Override
 	public int getColumnCount() {
-		try {
-			return rsmd.getColumnCount();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return 0;
-		}
+		return 5;
 	}
 	@Override
 	public Object getValueAt(int l, int c) {
+	
+		
 		
 		Ligne_vente cl=data.get(l);
 		if(c==0)
-			{return cl.getId_ligneVente();
+			{return cl.getarticle().getId_article();
 		  }
 			if(c==1)
-			{return cl.getQuantite();}
-			
+			{return cl.getarticle().getDesignation();	}
+		
 		   if(c==2)
+			{return cl.getPrix();}
+		if(c==3)
+			{return cl.getQuantite();
+		}
+		if(c==4)
 			{return cl.getRemise();}
-		   if(c==3)
-			{return cl.getPrix();
-		  }
-			if(c==4)
-			{return cl.getId_article();	}
-			
-		   if(c==5)
-			{return cl.getId_doc_vente();}
-		
-		
+		/*if(c==5)
+		{
+			return cl.getTaxe();
+		}*/
 		return("erreur");
 		
 	}
 	@Override
 	public String getColumnName(int l) {
 	
-		try {
-			return rsmd.getColumnName(l+1);
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			return null;
-		}
+		if(l==0)
+		return "id_article" ;
+		if(l==1)
+			return "Designation" ;
+		if(l==2)
+			return "Prix" ;
+		if(l==3)
+			return "Quantité" ;
+		if(l==4)
+			return "Remise %" ;
+		if(l==5)
+			return "Taxe %" ;
+	
+		return "erreur";
 	}
 	
 	public void supprimerLigne(int l){
@@ -105,8 +125,8 @@ public class Ligne_venteModel extends AbstractTableModel{
     fireTableDataChanged();
 		}catch(Exception e){}		
 	}
-	public void AjouterLigne(Ligne_vente f){
-		data.add(f);
+	public void AjouterLigne(Ligne_vente lig){
+		data.add(lig);
 		nblig ++;
 	    fireTableDataChanged();
 			
@@ -122,13 +142,18 @@ public class Ligne_venteModel extends AbstractTableModel{
 	Boolean b=false;
 	while(i<data.size()&&(b==false))
 	{
-	if(data.get(i).getId_ligneVente()==id)
+	if(data.get(i).getarticle().getId_article()==id)
 	{
 	b=true;
 	}	
 	i++;
 	}
 			return i-1;
+	}
+
+	public Ligne_vente getLigneVente(int selectedRow) {
+		// TODO Auto-generated method stub
+		return data.get(selectedRow);
 	}
 	
 
