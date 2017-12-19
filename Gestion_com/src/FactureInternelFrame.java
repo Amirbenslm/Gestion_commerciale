@@ -125,10 +125,13 @@ public class FactureInternelFrame extends JInternalFrame {
 		btnSupprimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.isRowSelected(table.getSelectedRow()))
-				{
+				{int i=JOptionPane.showConfirmDialog(null, "La suppression est irréversible. Êtes-vous sûr de vouloir continuer?",
+                        "Veuillez confirmer votre choix",
+                        JOptionPane.YES_NO_OPTION);
+				 	if(i==0){
 					db_Facture.supprimerFacture(db_Facture.mytablemodel.getFacture((int)db_Facture.mytablemodel.getValueAt(table.getSelectedRow(), 0)).getId_facture());
 					
-			}
+			}}
 			else
 			{JOptionPane.showMessageDialog(null,"Il faut sélectionner une ligne!","Erreur",JOptionPane.ERROR_MESSAGE);}
 		}

@@ -89,6 +89,7 @@ public class FamilleAjout extends JFrame {
 		}
 		
 		JButton btnAjouter = new JButton("Ajouter");
+		btnAjouter.setBackground(SystemColor.controlHighlight);
 		btnAjouter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int id_taxe=0;
@@ -109,6 +110,7 @@ public class FamilleAjout extends JFrame {
 		contentPane.add(btnAjouter);
 		
 		JButton btnAnnuler = new JButton("Annuler");
+		btnAnnuler.setBackground(SystemColor.controlHighlight);
 		btnAnnuler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

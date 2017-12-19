@@ -50,7 +50,7 @@ public class Familles extends JFrame implements MouseListener {
 		
 		db_famille=new FamilleBase();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 528, 374);
+		setBounds(350, 100, 528, 374);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -63,6 +63,7 @@ public class Familles extends JFrame implements MouseListener {
 		contentPane.add(scrollPane);
 		
 		JButton btnAjouter = new JButton("Ajouter");
+		btnAjouter.setBackground(SystemColor.controlHighlight);
 		btnAjouter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FamilleAjout familleAjout=new FamilleAjout(db_famille);
@@ -73,6 +74,7 @@ public class Familles extends JFrame implements MouseListener {
 		contentPane.add(btnAjouter);
 		
 		JButton btnModifier = new JButton("Modifier");
+		btnModifier.setBackground(SystemColor.controlHighlight);
 		btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.isRowSelected(table.getSelectedRow()))
@@ -91,13 +93,17 @@ public class Familles extends JFrame implements MouseListener {
 		contentPane.add(btnModifier);
 		
 		JButton btnSupprimer = new JButton("Supprimer");
+		btnSupprimer.setBackground(SystemColor.controlHighlight);
 		btnSupprimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.isRowSelected(table.getSelectedRow()))
 				{
-				
+					int i=JOptionPane.showConfirmDialog(null, "La suppression est irréversible. Êtes-vous sûr de vouloir continuer?",
+                            "Veuillez confirmer votre choix",
+                            JOptionPane.YES_NO_OPTION);
+					 	if(i==0){
 				db_famille.supprimerFamille((int)table.getModel().getValueAt(table.getSelectedRow(),0));
-				
+					 	}
 			
 			}
 			else

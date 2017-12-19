@@ -17,8 +17,8 @@ public class Bon_livraison_venteBase{
 
 	}
 public boolean AjoutBon_livraison_vente(Bon_livraison_vente f1)
-{String req="INSERT INTO Bon_livraison_vente(ref_bon_livraison,id_doc_vente,id_facture) VALUES('"+f1.getRef_bon_livraison()+"',"+f1.getId_doc_vente()+","+f1.getId_facture()+")";
-String rech="select max(id_bon_livraison) from Bon_livraison_vente where ref_bon_livraison='"+f1.getRef_bon_livraison()+"' and id_doc_vente="+f1.getId_doc_vente()+" and id_facture="+f1.getId_facture();
+{String req="INSERT INTO Bon_livraison_vente(ref_bon_livraison,id_doc_vente) VALUES('"+f1.getRef_bon_livraison()+"',"+f1.getId_doc_vente()+")";
+String rech="select max(id_bon_livraison) from Bon_livraison_vente where ref_bon_livraison='"+f1.getRef_bon_livraison()+"' and id_doc_vente="+f1.getId_doc_vente();
 
 try {
 	ConnectionDataBase.executeUpdate(req);

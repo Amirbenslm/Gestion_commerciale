@@ -4,7 +4,14 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -35,6 +42,7 @@ public class Gestion {
 	private FournisseurJInternelFrame fournisinternelframe;
 	protected DevisInternelFrame devisinterframe;
 	private  FactureInternelFrame factureinterframe ;
+	protected ResultSet rs;
 	/**
 	 * Launch the application.
 	 */
@@ -115,6 +123,18 @@ public class Gestion {
 		mntmaProposEntreprise.setAccelerator(KeyStroke.getKeyStroke("F1"));
 		mntmStockMinimum.setAccelerator(KeyStroke.getKeyStroke("F2"));
 		mntmRechercher.setAccelerator(KeyStroke.getKeyStroke("F3"));
+		
+		JMenuItem mntmFermetureDeCaisse = new JMenuItem("Fermeture de caisse");
+		mntmFermetureDeCaisse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int x= ConnectionDataBase.executeUpdate("update cloture set etat ='F'where id_cloture="+OuvertureCaisse.clotureCourant.getId_cloture());
+					if(x>0){JOptionPane.showMessageDialog(null,"La Caisse est fermé","Succéss",JOptionPane.INFORMATION_MESSAGE);}
+
+			}
+		});
+		mnNewMenu.add(mntmFermetureDeCaisse);
+		mntmFermetureDeCaisse.setAccelerator(KeyStroke.getKeyStroke("F4"));
 		mnNewMenu.add(mntmQuitter);
 		
 		JMenu mnStructure = new JMenu("Structure");
@@ -246,10 +266,31 @@ public class Gestion {
 		mnTraitement.add(mnGestionDeReglement);
 		
 		JMenuItem mntmSaisieReglementClient = new JMenuItem("Saisie r\u00E9glement client");
+		mntmSaisieReglementClient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ReglementClientNouveau().setVisible(true);
+			}
+		});
 		mnGestionDeReglement.add(mntmSaisieReglementClient);
 		
 		JMenuItem mntmSaisieReglementFournisseur = new JMenuItem("Saisie r\u00E9glement fournisseur");
+		mntmSaisieReglementFournisseur.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ReglementFournisseurNouveau().setVisible(true);
+			}
+		});
 		mnGestionDeReglement.add(mntmSaisieReglementFournisseur);
+		
+		JMenuItem mntmAfficherRglementClient = new JMenuItem("Afficher les r\u00E9glements Client");
+		mntmAfficherRglementClient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Reglement_Client().setVisible(true);
+			}
+		});
+		mnGestionDeReglement.add(mntmAfficherRglementClient);
+		
+		JMenuItem mntmAfficherLesRglements = new JMenuItem("Afficher les r\u00E9glements Fournisseur");
+		mnGestionDeReglement.add(mntmAfficherLesRglements);
 		frame.getContentPane().setLayout(null);
 		panel=new JPanel();
 		panel.setBounds(101, 0, 771, 528);
@@ -293,7 +334,7 @@ public class Gestion {
 		bfourisseur.setVerticalTextPosition(SwingConstants.BOTTOM);
 		bfourisseur.setHorizontalTextPosition(SwingConstants.CENTER);
 		
-		JButton bpaiement = new JButton("Paiement");
+		JButton bpaiement = new JButton("R\u00E9glements");
 		panel_1.add(bpaiement);
 		bpaiement.setBackground(SystemColor.controlHighlight);
 		bpaiement.setIcon(new ImageIcon(imgpai));
@@ -410,11 +451,6 @@ public class Gestion {
 		});
 		bpaiement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PaiementInernelFrame  paiInternelFram =new PaiementInernelFrame();
-				paiInternelFram.setVisible(true);
-			
-				desktopPane.add(paiInternelFram);
-				paiInternelFram.toFront();
 			}
 		});
 		bfourisseur.addActionListener(new ActionListener() {

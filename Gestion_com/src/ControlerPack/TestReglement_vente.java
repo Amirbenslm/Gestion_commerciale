@@ -56,7 +56,7 @@ public class TestReglement_vente extends JFrame implements MouseListener{
 			ajout.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Reglement_vente f=new Reglement_vente(0,10, "mode_payement", "1214-02-20",1);
+					Reglement_vente f=new Reglement_vente(0,10,"2017-02-02", "mode_payement", "1214-02-20",1);
 					cdb.AjoutReglement_vente(f);
 					ResultSet rech=	cdb.rechercheByID(2);
 				try {
@@ -75,7 +75,7 @@ public class TestReglement_vente extends JFrame implements MouseListener{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Reglement_vente f=new Reglement_vente(1,10, "mode_payementModifier", "1314-02-20",1);
+					Reglement_vente f=new Reglement_vente(1,10,"2017-02-02", "mode_payementModifier", "1314-02-20",1);
 					cdb.ModifierReglement_vente(f);
 					}
 			});

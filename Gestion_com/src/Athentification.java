@@ -1,6 +1,6 @@
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
-import java.awt.Toolkit;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,7 +20,6 @@ import javax.swing.ImageIcon;
 
 import java.awt.Color;
 
-import javax.swing.UIManager;
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
@@ -30,18 +29,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
-import javax.swing.DropMode;
-import javax.swing.JComboBox;
-
-import java.awt.Window.Type;
-
 public class Athentification extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField jlogin;
 	private JPasswordField jpwd;
 	ConnectionDataBase cdb=null;
-	
+	public static int id_caissier ;
 	/**
 	 * Launch the application.
 	 */
@@ -101,23 +95,21 @@ public class Athentification extends JFrame {
 		connexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String reqconnexion="SELECT * FROM `caissier` WHERE `login`='"+jlogin.getText()+"' and `pwd`='"+jpwd.getText()+"'";
-				//String reqconnexion="select * from caissier where `login`='"+textField.getText()+"' and  `pwd`='"+pwd.getPassword()+"'";
 				ResultSet rs=ConnectionDataBase.executeQuery(reqconnexion);
 				
 				try {if(rs.next())
-					{
+					{                    id_caissier=rs.getInt("id_caissier");
 					jlogin.setText(""); jpwd.setText("");
-					Gestion g=new Gestion();
-					g.frame.setVisible(true);
+					new OuvertureCaisse(rs.getInt("id_caissier")).setVisible(true);
 					setVisible(false);
-                    
-							System.out.println("Success connection");
+
+							
 						
 						}
 				else	
 					
 				{
-					System.out.println("introuvable!!!");
+					
 					JOptionPane.showMessageDialog(null,"Nom utilisateur ou mot de passe incorrect","Erreur",JOptionPane.ERROR_MESSAGE);
 					jpwd.setText("");
 				}

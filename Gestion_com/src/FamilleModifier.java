@@ -100,6 +100,7 @@ public class FamilleModifier extends JFrame {
 			e2.printStackTrace();
 		}	
 		JButton btnModifier = new JButton("Modifier");
+		btnModifier.setBackground(SystemColor.controlHighlight);
 		btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int id_taxe=0;
@@ -121,6 +122,7 @@ public class FamilleModifier extends JFrame {
 		contentPane.add(btnModifier);
 		
 		JButton btnAnnuler = new JButton("Annuler");
+		btnAnnuler.setBackground(SystemColor.controlHighlight);
 		btnAnnuler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

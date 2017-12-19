@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.SystemColor;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,6 +34,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
 
 public class DevisNouveau extends JFrame implements MouseListener {
 
@@ -49,24 +52,13 @@ public class DevisNouveau extends JFrame implements MouseListener {
 	/**
 	 * Launch the application.
 	 */
-/*	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DevisNouveau frame = new DevisNouveau(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 
 	/**
 	 * Create the frame.
 	 * @param db_devis 
 	 */
 	public DevisNouveau(DevisBase db_devis) {
+		setResizable(false);
 		ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
 		ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");
 		Date actuelle = new Date();
@@ -80,20 +72,21 @@ public class DevisNouveau extends JFrame implements MouseListener {
 		
 		db_devis.AjoutDevis(devis);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(400, 100, 696, 434);
+		setBounds(400, 100, 754, 491);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 660, 82);
+		panel.setBorder(new LineBorder(SystemColor.textHighlight));
+		panel.setBounds(10, 11, 728, 82);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Code Abarre", "Designation", "Reference"}));
-		comboBox.setBounds(10, 27, 129, 27);
+		comboBox.setBounds(10, 27, 129, 30);
 		panel.add(comboBox);
 		db_ligneVente =new Ligne_venteBase();
 		textField = new JTextField();
@@ -125,29 +118,51 @@ public class DevisNouveau extends JFrame implements MouseListener {
 			 }
 			}
 		});
-		textField.setBounds(164, 27, 259, 27);
+		textField.setBounds(164, 27, 231, 30);
 		panel.add(textField);
 		textField.setColumns(10);
 		
 		JButton btnClient = new JButton("Client");
+		btnClient.setBackground(SystemColor.controlHighlight);
 		btnClient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				new ListesClients(document.getId_documentV(),lbNomClient).setVisible(true);
 			}
 		});
-		btnClient.setBounds(521, 31, 116, 23);
+		btnClient.setBounds(571, 27, 136, 30);
 		panel.add(btnClient);
 		table=new JTable();
 		table.setModel(db_ligneVente.mytablemodel);
 		table.addMouseListener(this);
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(10, 134, 660, 232);
+		scrollPane.setBorder(new LineBorder(SystemColor.textHighlight));
+		scrollPane.setBounds(10, 134, 728, 317);
 		contentPane.add(scrollPane);
 		
 		 lbNomClient = new JLabel("");
 		lbNomClient.setBounds(10, 98, 357, 25);
 		contentPane.add(lbNomClient);
+		
+		JButton btnSupprimerLigne = new JButton("Supprimer ligne");
+		btnSupprimerLigne.setBackground(SystemColor.controlHighlight);
+		btnSupprimerLigne.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(table.isRowSelected(table.getSelectedRow()))
+				{int i=JOptionPane.showConfirmDialog(null, "La suppression est irréversible. Êtes-vous sûr de vouloir continuer?",
+                        "Veuillez confirmer votre choix",
+                        JOptionPane.YES_NO_OPTION);
+				 	if(i==0){
+				 		
+					db_ligneVente.supprimerLigne_vente(db_ligneVente.mytablemodel.getLigneVente(table.getSelectedRow()).getId_ligneVente());
+					}}
+			else
+			{JOptionPane.showMessageDialog(null,"Il faut sélectionner une ligne!","Erreur",JOptionPane.ERROR_MESSAGE);}
+		}
+			
+		});
+		btnSupprimerLigne.setBounds(586, 98, 138, 30);
+		contentPane.add(btnSupprimerLigne);
 	}
 
 	@Override

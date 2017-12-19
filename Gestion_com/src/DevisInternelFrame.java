@@ -1,6 +1,7 @@
 import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -40,6 +41,7 @@ public class DevisInternelFrame extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public DevisInternelFrame() {
+		
 		db_devis=new DevisBase();
 		setTitle("Devis");
 		setBounds(100, 100, 450, 300);
@@ -104,6 +106,37 @@ public class DevisInternelFrame extends JInternalFrame {
 		btnNouveau.setBounds(2, 6, 123, 80);
 		btnNouveau.setBackground(SystemColor.controlHighlight); 
 		panel.add(btnNouveau);
+		
+		JButton btnBonLivraison = new JButton("Bon Livraison");
+		btnBonLivraison.setBackground(SystemColor.controlHighlight); 
+		btnBonLivraison.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Devis_EnBonLivraison().setVisible(true);
+			}
+		});
+		btnBonLivraison.setBounds(243, 6, 123, 80);
+		panel.add(btnBonLivraison);
+		
+		JButton btnSupprimer = new JButton("Supprimer");
+		btnSupprimer.setBackground(SystemColor.controlHighlight); 
+		btnSupprimer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(table.isRowSelected(table.getSelectedRow()))
+				{int i=JOptionPane.showConfirmDialog(null, "La suppression est irréversible. Êtes-vous sûr de vouloir continuer?",
+                        "Veuillez confirmer votre choix",
+                        JOptionPane.YES_NO_OPTION);
+				 	if(i==0){
+				 		
+					db_devis.supprimerDevis(((int)table.getValueAt(table.getSelectedRow(),0)));
+					
+			}}
+			else
+			{JOptionPane.showMessageDialog(null,"Il faut sélectionner une ligne!","Erreur",JOptionPane.ERROR_MESSAGE);}
+		}
+			
+		});
+		btnSupprimer.setBounds(122, 6, 123, 80);
+		panel.add(btnSupprimer);
 		this.setVisible(true);
 
 	}

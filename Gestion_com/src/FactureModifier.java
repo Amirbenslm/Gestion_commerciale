@@ -112,6 +112,7 @@ public class FactureModifier extends JFrame {
 		textTaxeFiscale.setText(String.valueOf(facture.getTaxe_fiscale()));
 		textFodec.setText(String.valueOf(facture.getFodec()));
 		JButton btnModifier = new JButton("Modifier");
+		btnModifier.setBackground(SystemColor.controlHighlight);
 		btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				facture.setFodec(Float.parseFloat(textFodec.getText()));
@@ -126,6 +127,7 @@ public class FactureModifier extends JFrame {
 		contentPane.add(btnModifier);
 		
 		JButton btnNewButton = new JButton("Annuler");
+		btnNewButton.setBackground(SystemColor.controlHighlight);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

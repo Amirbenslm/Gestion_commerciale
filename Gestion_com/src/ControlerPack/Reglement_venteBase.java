@@ -18,8 +18,8 @@ public class Reglement_venteBase{
 		mytablemodel=new Reglement_venteModel(ConnectionDataBase.executeQuery("select * from Reglement_vente"));
 
 	}
-public boolean AjoutReglement_vente(Reglement_vente f1)
-{String req="INSERT INTO Reglement_vente(montant,mode_paiement,echeance,id_doc_vente) VALUES("+f1.getMontant()+",'"+f1.getMode_payement()+"','"+f1.getEcheance()+"',"+f1.getId_doc_vente()+")";
+public Reglement_vente AjoutReglement_vente(Reglement_vente f1)
+{String req="INSERT INTO Reglement_vente(montant,date_reglement,mode_paiement,echeance,id_doc_vente) VALUES("+f1.getMontant()+",'"+f1.getDate_reglement()+"','"+f1.getMode_payement()+"','"+f1.getEcheance()+"',"+f1.getId_doc_vente()+")";
 String rech="select max(id_reg_vente) from Reglement_vente where montant="+f1.getMontant()+" and mode_paiement='"+f1.getMode_payement()+"' and echeance='"+f1.getEcheance()+"' and id_doc_vente="+f1.getId_doc_vente();
 
 try {
@@ -37,7 +37,7 @@ try {
 	e1.printStackTrace();
 }
 
-	return true;
+	return f1;
 }
 
 
@@ -74,6 +74,10 @@ public void supprimerReglement_vente(int id)
 		JOptionPane.showMessageDialog(null," Supprission echoué!","Erreur",JOptionPane.ERROR_MESSAGE);
 	else
 		mytablemodel.supprimerLigne(id);
+}
+public Reglement_vente getReglement(int id) {
+	// TODO Auto-generated method stub
+	return mytablemodel.getReglement(id);
 }
 
 

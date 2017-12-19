@@ -1,5 +1,4 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,6 +26,8 @@ import java.util.Date;
 import java.util.StringTokenizer;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.border.LineBorder;
 import java.awt.SystemColor;
@@ -46,9 +47,9 @@ protected Document_venteModel mytablemodel;
 	private Document_vente document;
 	private Document_venteBase db_docVente;
 	private Facture facture;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField textRetourSource;
+	private JTextField textTaxeFiscale;
+	private JTextField textFodec;
 	
 	
 
@@ -58,7 +59,7 @@ protected Document_venteModel mytablemodel;
 	 */
 	public FactureNouveau(FactureBase db_Facture) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(200, 100, 793, 526);
+		setBounds(300, 100, 793, 526);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -66,11 +67,7 @@ protected Document_venteModel mytablemodel;
 		Date actuelle = new Date();
 		 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		 String dat = dateFormat.format(actuelle);
-		 document=new Document_vente(0, dat,"F",2);
-		 db_docVente=new Document_venteBase();
-		document=db_docVente.AjoutDocument_vente(document);
-		facture=new Facture(0,"Fact"+document.getId_documentV(),0,0,0,document.getId_documentV());
-		facture=db_Facture.AjoutFacture(facture);
+		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(SystemColor.textHighlight));
 		panel.setBounds(10, 11, 757, 116);
@@ -96,7 +93,7 @@ protected Document_venteModel mytablemodel;
 			
 
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(comboBox.getSelectedItem());
+				
 				 StringTokenizer st = new StringTokenizer((String)comboBox.getSelectedItem(),"   ");  
 			     String     id_client=st.nextToken();
 				rsrech=ConnectionDataBase.executeQuery("select * from document_vente where type_doc= 'BL' and id_client= "+Integer.parseInt(id_client) );
@@ -124,20 +121,34 @@ protected Document_venteModel mytablemodel;
 		lblFodec.setBounds(386, 71, 100, 21);
 		panel.add(lblFodec);
 		
-		textField = new JTextField();
-		textField.setBounds(496, 11, 104, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		textRetourSource = new JTextField();
+		textRetourSource.setBounds(496, 11, 104, 20);
+		panel.add(textRetourSource);
+		textRetourSource.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(496, 40, 104, 20);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		textTaxeFiscale = new JTextField();
+		textTaxeFiscale.setBounds(496, 40, 104, 20);
+		panel.add(textTaxeFiscale);
+		textTaxeFiscale.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(496, 71, 104, 20);
-		panel.add(textField_2);
-		textField_2.setColumns(10);
+		textFodec = new JTextField();
+		textFodec.setBounds(496, 71, 104, 20);
+		panel.add(textFodec);
+		textFodec.setColumns(10);
+		textFodec.setText("10");
+		textRetourSource.setText("10");
+		textTaxeFiscale.setText("10");
+		JButton btnSauvgarder = new JButton("Sauvegarder");
+		btnSauvgarder.setBackground(SystemColor.controlHighlight);
+		btnSauvgarder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			ConnectionDataBase.executeUpdate("update facture set retour_source ="+Float.parseFloat(textRetourSource.getText())+ ", t_fiscale ="+Float.parseFloat(textTaxeFiscale.getText())+", fodec ="+Float.parseFloat(textFodec.getText())+" where id_facture ="+facture.getId_facture());
+			
+			}
+			
+		});
+		btnSauvgarder.setBounds(620, 28, 119, 31);
+		panel.add(btnSauvgarder);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBorder(new LineBorder(SystemColor.textHighlight));
@@ -145,8 +156,14 @@ protected Document_venteModel mytablemodel;
 		contentPane.add(scrollPane);
 		
 		JButton btnFacturer = new JButton("Facturer");
+		btnFacturer.setBackground(SystemColor.controlHighlight);
 		btnFacturer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				 document=new Document_vente(0, dat,"F",2);
+				 db_docVente=new Document_venteBase();
+				document=db_docVente.AjoutDocument_vente(document);
+				facture=new Facture(0,"Fact"+document.getId_documentV(),10,10,10,document.getId_documentV());
+				facture=db_Facture.AjoutFacture(facture);
 			int[] tab=table.getSelectedRows();
 			
 			int i=0;
@@ -156,12 +173,15 @@ protected Document_venteModel mytablemodel;
 			ConnectionDataBase.executeUpdate("update bon_livraison_vente set id_facture="+facture.getId_facture()+" where id_doc_vente="+id_doc);
 			i++;
 			}
+			JOptionPane.showMessageDialog(null,"Facture ID: "+facture.getId_facture()+"  Reference: "+facture.getReference()+"  est  enregistré","Succéss",JOptionPane.INFORMATION_MESSAGE);	
+
 			}
 		});
 		btnFacturer.setBounds(415, 437, 124, 39);
 		contentPane.add(btnFacturer);
 		
 		JButton btnAnnuler = new JButton("Annuler");
+		btnAnnuler.setBackground(SystemColor.controlHighlight);
 		btnAnnuler.setBounds(563, 437, 124, 39);
 		contentPane.add(btnAnnuler);
 	}

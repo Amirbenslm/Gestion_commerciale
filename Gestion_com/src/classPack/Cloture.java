@@ -5,15 +5,24 @@ public class Cloture {
 	private  String date ;
 	private double montant_ouverture;
 	private double montant_fermeture;
+	String etat;
 	private int id_cassier ;
 	
 	
-	public Cloture(int id_cloture, String date, double montant_ouverture, double montant_fermeture, int id_cassier) {
-		super();
+	
+	public String getEtat() {
+		return etat;
+	}
+	public void setEtat(String etat) {
+		this.etat = etat;
+	}
+	public Cloture(int id_cloture, String date, double montant_ouverture, double montant_fermeture, String string,
+			int id_cassier) {
 		this.id_cloture = id_cloture;
 		this.date = date;
 		this.montant_ouverture = montant_ouverture;
 		this.montant_fermeture = montant_fermeture;
+		this.etat = string;
 		this.id_cassier = id_cassier;
 	}
 	public String getDate() {

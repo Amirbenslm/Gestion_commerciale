@@ -35,11 +35,12 @@ public class StockMinimum extends JFrame {
 	 * Create the frame.
 	 */
 	public StockMinimum() {
+		setResizable(false);
 		ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
 		ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");
-		setTitle("Articles");
+		setTitle("Stock Minimum");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 812, 430);
+		setBounds(100, 100, 939, 430);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -47,7 +48,7 @@ public class StockMinimum extends JFrame {
 		JTable table=new JTable();
 		table.setModel(new ArticleModel(ConnectionDataBase.executeQuery("select * from article where qte_stock <= qte_min")));
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(10, 47, 776, 258);
+		scrollPane.setBounds(10, 47, 913, 343);
 		contentPane.add(scrollPane);
 	}
 }

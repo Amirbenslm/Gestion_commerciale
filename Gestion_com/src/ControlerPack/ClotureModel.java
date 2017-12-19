@@ -30,8 +30,8 @@ public class ClotureModel extends AbstractTableModel{
 				date=rs.getString(2);
 				montant_ouverture=rs.getDouble(3);
 				montant_fermeture=rs.getDouble(4);
-				id_caissier=rs.getInt(5);
-				c=new Cloture(id_cloture,date,montant_ouverture,montant_fermeture,id_caissier);
+				id_caissier=rs.getInt(6);
+				c=new Cloture(id_cloture,date,montant_ouverture,montant_fermeture,"F",id_caissier);
 				data.add(c);
 			}
 		}

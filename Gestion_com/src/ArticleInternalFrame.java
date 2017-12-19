@@ -31,18 +31,9 @@ public class ArticleInternalFrame extends JInternalFrame implements MouseListene
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ArticleInternalFrame frame = new ArticleInternalFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
+		
+	
 	
 	private JTextField textRecherche;
 	private JTable table;
@@ -56,8 +47,7 @@ public class ArticleInternalFrame extends JInternalFrame implements MouseListene
 	 */
 	public ArticleInternalFrame() {
 		setTitle("Article");
-		//ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
-		//ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");
+		
 		 db_article=new ArticleBase();
 		setBounds(100, 100, 450, 300);
 		this.setBorder(null);
@@ -173,10 +163,13 @@ JButton btnNewButton_3 = new JButton("Supprimer");
 btnNewButton_3.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
 		if(table.isRowSelected(table.getSelectedRow()))
-		{
+		{int i=JOptionPane.showConfirmDialog(null, "La suppression est irréversible. Êtes-vous sûr de vouloir continuer?",
+                "Veuillez confirmer votre choix",
+                JOptionPane.YES_NO_OPTION);
+		 	if(i==0){
 			
 			db_article.supprimerArticle((int)table.getModel().getValueAt(table.getSelectedRow(),0));
-		}
+		}}
 		else
 		{JOptionPane.showMessageDialog(null,"Il faut selectionner une ligne!","Erreur",JOptionPane.ERROR_MESSAGE);}
 	}

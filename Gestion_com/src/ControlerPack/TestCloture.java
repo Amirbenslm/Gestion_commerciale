@@ -53,7 +53,7 @@ public class TestCloture extends JFrame implements MouseListener{
 			ajout.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Cloture f=new Cloture(1,"2017-06-08 00:00:00",10,222,2);
+					Cloture f=new Cloture(1,"2017-06-08 00:00:00",10,222,"O",2);
 					cdb.AjoutCloture(f);
 					ResultSet rech=	cdb.rechercheByDate("ville88");
 				try {
@@ -72,7 +72,7 @@ public class TestCloture extends JFrame implements MouseListener{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Cloture f=new Cloture(1,"2017-06-08 00:00:00",1,2,2);
+					Cloture f=new Cloture(1,"2017-06-08 00:00:00",1,2,"O",2);
 					cdb.ModifierCloture(f);
 					}
 			});

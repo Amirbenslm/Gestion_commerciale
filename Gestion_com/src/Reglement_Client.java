@@ -1,5 +1,4 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -7,11 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import ControlerPack.ConnectionDataBase;
-import ControlerPack.Document_venteBase;
-import ControlerPack.Document_venteModel;
-import classPack.Article;
-import classPack.Document_vente;
-
+import ControlerPack.Reglement_venteBase;
+import ControlerPack.Reglement_venteModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ButtonGroup;
@@ -29,15 +25,15 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JRadioButton;
 
-public class Document_VenteFrame extends JFrame {
+public class Reglement_Client extends JFrame {
 
 	private JPanel contentPane;
-	private Document_venteBase db_documentvente=new Document_venteBase();
+	private Reglement_venteBase db_reglementvente=new Reglement_venteBase();
 	private JTable table;
-	private JComboBox cb_client;
+	private JComboBox<String> cb_client;
 	private DefaultComboBoxModel<String> dcm;
 	protected ResultSet rsrech;
-
+	
 	protected String reqfiltre;
 	/**
 	 * Launch the application.
@@ -47,18 +43,18 @@ public class Document_VenteFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Document_VenteFrame() {
+	public Reglement_Client() {
 		setResizable(false);
-		setTitle("Document vente");
+		setTitle("Réglements des Clients");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(250, 100, 827, 578);
+		setBounds(350, 100, 827, 578);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		table =new JTable();
-		table.setModel(db_documentvente.mytablemodel);
+		table.setModel(db_reglementvente.mytablemodel);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBorder(new LineBorder(SystemColor.textHighlight));
 		scrollPane.setBounds(10, 195, 791, 343);
@@ -73,7 +69,7 @@ public class Document_VenteFrame extends JFrame {
 		
 		JButton btnModifier = new JButton("Modifier");
 		btnModifier.setBackground(SystemColor.controlHighlight);
-		btnModifier.addActionListener(new ActionListener() {
+	/*	btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.isRowSelected(table.getSelectedRow()))
 				{
@@ -84,30 +80,31 @@ public class Document_VenteFrame extends JFrame {
 			}
 
 			 
-		});
-		btnModifier.setBounds(0, 7, 112, 68);
+		});*/
+		btnModifier.setBounds(0, 11, 112, 57);
 		panel.add(btnModifier);
 		
 		JButton btnSupprimer = new JButton("Supprimer");
 		btnSupprimer.setBackground(SystemColor.controlHighlight);
 		btnSupprimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				if(table.isRowSelected(table.getSelectedRow()))
-				{int i=JOptionPane.showConfirmDialog(null, "La suppression est irréversible. Êtes-vous sûr de vouloir continuer?",
-                        "Veuillez confirmer votre choix",
-                        JOptionPane.YES_NO_OPTION);
-				 	if(i==0){
-				 		
-					db_documentvente.supprimerDocument_vente((db_documentvente.getDocument((int)table.getValueAt(table.getSelectedRow(),0))).getId_documentV());
-					
-			}}
+				{
+					 int i=JOptionPane.showConfirmDialog(null, "La suppression est irréversible. Êtes-vous sûr de vouloir continuer?",
+                             "Veuillez confirmer votre choix",
+                             JOptionPane.YES_NO_OPTION);
+					 	if(i==0){
+					db_reglementvente.supprimerReglement_vente(((int)table.getValueAt(table.getSelectedRow(),0)));
+					 			}
+			}
 			else
 			{JOptionPane.showMessageDialog(null,"Il faut sélectionner une ligne!","Erreur",JOptionPane.ERROR_MESSAGE);}
 		}
 			
 			
 		});
-		btnSupprimer.setBounds(110, 7, 112, 68);
+		btnSupprimer.setBounds(110, 11, 112, 57);
 		panel.add(btnSupprimer);
 		
 		JPanel panel_1 = new JPanel();
@@ -129,7 +126,7 @@ public class Document_VenteFrame extends JFrame {
 				e1.printStackTrace();
 			}
 			 
-			cb_client = new JComboBox(dcm);
+			cb_client = new JComboBox<String>(dcm);
 			cb_client.addActionListener(new ActionListener() {
 				
 
@@ -137,9 +134,9 @@ public class Document_VenteFrame extends JFrame {
 					if(cb_client.getSelectedItem().equals("Choisit un Client")==false)
 					{ StringTokenizer st = new StringTokenizer((String)cb_client.getSelectedItem(),"   ");  
 				     String     id_client=st.nextToken();
-					rsrech=ConnectionDataBase.executeQuery("select * from document_vente where  id_client= "+Integer.parseInt(id_client) );
-					db_documentvente.mytablemodel=new Document_venteModel(rsrech);
-					table.setModel(db_documentvente.mytablemodel);
+					rsrech=ConnectionDataBase.executeQuery("select id_reg_vente,montant,date_reglement,mode_paiement,echeance,id_doc_vente from document_vente d,reglement_vente r where  id_client= "+Integer.parseInt(id_client)+" and d.id_documentV = r.id_doc_vente" );
+					db_reglementvente.mytablemodel=new Reglement_venteModel(rsrech);
+					table.setModel(db_reglementvente.mytablemodel);
 				}}
 			});
 		
@@ -152,45 +149,43 @@ public class Document_VenteFrame extends JFrame {
 		panel_1.add(lblClient);
 		
 		JRadioButton rdbtnFacture = new JRadioButton("Facture");
-		rdbtnFacture.setBounds(313, 7, 109, 23);
+		rdbtnFacture.setBounds(313, 21, 109, 23);
 		panel_1.add(rdbtnFacture);
 		
 		JRadioButton rdbtnBonLivraison = new JRadioButton("Bon Livraison");
-		rdbtnBonLivraison.setBounds(313, 30, 109, 23);
+		rdbtnBonLivraison.setBounds(313, 47, 109, 23);
 		panel_1.add(rdbtnBonLivraison);
-		
-		JRadioButton rdbtnDevis = new JRadioButton("Devis");
-		rdbtnDevis.setBounds(313, 56, 109, 23);
-		panel_1.add(rdbtnDevis);
 		
 		JButton btnFiltrer = new JButton("Filtrer");
 		btnFiltrer.setBackground(SystemColor.controlHighlight);
 		
 		btnFiltrer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(rdbtnFacture.isSelected()||rdbtnBonLivraison.isSelected()||rdbtnDevis.isSelected())
+				if(rdbtnFacture.isSelected()||rdbtnBonLivraison.isSelected())
 				{
-					if(rdbtnFacture.isSelected())
-				{reqfiltre="select * from document_vente where type_doc='F'";}
+				if(rdbtnFacture.isSelected())
+				{
+					reqfiltre="select id_reg_vente,montant,date_reglement,mode_paiement,echeance,id_doc_vente from document_vente d,reglement_vente r where d.type_doc='F' and d.id_documentV = r.id_doc_vente";}
 				if(rdbtnBonLivraison.isSelected())
-				{reqfiltre="select * from document_vente where type_doc='BL'";}
-				if(rdbtnDevis.isSelected())
-				{reqfiltre="select * from document_vente where type_doc='D'";}
+				{
+					reqfiltre="select id_reg_vente,montant,date_reglement,mode_paiement,echeance,id_doc_vente from document_vente d,reglement_vente r where d.type_doc='BL' and d.id_documentV = r.id_doc_vente";}
+				
 				
 				if(cb_client.getSelectedItem().equals("Choisit un Client"))
-				{db_documentvente.mytablemodel=new Document_venteModel(ConnectionDataBase.executeQuery(reqfiltre));}
+				{db_reglementvente.mytablemodel=new Reglement_venteModel(ConnectionDataBase.executeQuery(reqfiltre));}
 				
 				if(cb_client.getSelectedItem().equals("Choisit un Client")==false)
 				{
 					 StringTokenizer st = new StringTokenizer((String)cb_client.getSelectedItem(),"   ");  
 				     String     id_client=st.nextToken();
-				     db_documentvente.mytablemodel=new Document_venteModel(ConnectionDataBase.executeQuery(reqfiltre+" and  id_client= "+Integer.parseInt(id_client)));}
+				     db_reglementvente.mytablemodel=new Reglement_venteModel(ConnectionDataBase.executeQuery(reqfiltre+" and  id_client= "+Integer.parseInt(id_client)));}
 				
 				
 				
 				
 				
-				table.setModel(db_documentvente.mytablemodel);
+				table.setModel(db_reglementvente.mytablemodel);
+			
 			}
 			else {JOptionPane.showMessageDialog(null,"Il faut cocher un type de document!","Erreur",JOptionPane.ERROR_MESSAGE);}
 			}
@@ -198,21 +193,19 @@ public class Document_VenteFrame extends JFrame {
 		btnFiltrer.setBounds(428, 7, 153, 29);
 		panel_1.add(btnFiltrer);
 		
-		JButton btnToutLesDocuments = new JButton("Tout les Documents");
-		btnToutLesDocuments.setAutoscrolls(true);
-		btnToutLesDocuments.setBounds(428, 44, 153, 29);
-		panel_1.add(btnToutLesDocuments);
-		btnToutLesDocuments.setBackground(SystemColor.controlHighlight);
+		JButton btnToutLesReglement = new JButton("Tout les Réglements");
+		btnToutLesReglement.setAutoscrolls(true);
+		btnToutLesReglement.setBounds(428, 44, 153, 29);
+		panel_1.add(btnToutLesReglement);
+		btnToutLesReglement.setBackground(SystemColor.controlHighlight);
 		ButtonGroup btngroup=new ButtonGroup();
-		
-		btngroup.add(rdbtnDevis);
 		btngroup.add(rdbtnFacture);
 		btngroup.add(rdbtnBonLivraison);
-		btnToutLesDocuments.addActionListener(new ActionListener() {
+		btnToutLesReglement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btngroup.clearSelection();
-				db_documentvente.mytablemodel=new Document_venteModel(ConnectionDataBase.executeQuery("select * from document_vente"));
-				table.setModel(db_documentvente.mytablemodel);
+				db_reglementvente.mytablemodel=new Reglement_venteModel(ConnectionDataBase.executeQuery("select * from reglement_vente"));
+				table.setModel(db_reglementvente.mytablemodel);
 				
 			}
 		});

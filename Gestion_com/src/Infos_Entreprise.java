@@ -7,6 +7,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
+import java.awt.SystemColor;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
@@ -57,9 +59,10 @@ public class Infos_Entreprise extends JFrame {
 	 * Create the frame.
 	 */
 	public Infos_Entreprise() {
+		setResizable(false);
 		setTitle("A propos Entreprise");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 526, 437);
+		setBounds(350, 100, 526, 437);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -185,8 +188,9 @@ public class Infos_Entreprise extends JFrame {
 		contentPane.add(textsite);
 		textsite.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Enregistrer");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnEnregistrer = new JButton("Enregistrer");
+		btnEnregistrer.setBackground(SystemColor.controlHighlight);
+		btnEnregistrer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					FileWriter fw = new FileWriter ("infos_entreprise.txt");
@@ -245,8 +249,18 @@ public class Infos_Entreprise extends JFrame {
 		catch (Exception e){
 			System.out.println(e.toString());
 		}
-		btnNewButton.setBounds(175, 358, 102, 29);
-		contentPane.add(btnNewButton);
+		btnEnregistrer.setBounds(287, 368, 102, 29);
+		contentPane.add(btnEnregistrer);
+		
+		JButton btnQuitter = new JButton("Quitter");
+		btnQuitter.setBackground(SystemColor.controlHighlight);
+		btnQuitter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnQuitter.setBounds(399, 368, 102, 29);
+		contentPane.add(btnQuitter);
 		this.setVisible(true);
 	}
 }

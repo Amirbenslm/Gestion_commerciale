@@ -9,6 +9,8 @@ import ControlerPack.TaxeBase;
 import classPack.Taxe;
 
 import java.awt.GridLayout;
+import java.awt.SystemColor;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Font;
@@ -58,6 +60,7 @@ public class TaxeAjout extends JFrame {
 		textField_taux.setColumns(10);
 		
 		JButton btnAjouter = new JButton("Ajouter");
+		btnAjouter.setBackground(SystemColor.controlHighlight);
 		btnAjouter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
  
@@ -70,6 +73,7 @@ public class TaxeAjout extends JFrame {
 		contentPane.add(btnAjouter);
 		
 		JButton btnAnnuler = new JButton("Annuler");
+		btnAnnuler.setBackground(SystemColor.controlHighlight);
 		btnAnnuler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

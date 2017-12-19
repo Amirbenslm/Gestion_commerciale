@@ -12,6 +12,8 @@ import ControlerPack.TaxeModel;
 import classPack.Taxe;
 
 import java.awt.GridLayout;
+import java.awt.SystemColor;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Font;
@@ -64,6 +66,7 @@ public class TaxeModifier extends JFrame {
 		textFieldlibelle.setText(t.getLibelle());
 		textField_taux.setText(String.valueOf(t.getTaux()) );
 		JButton btnModifier = new JButton("Modifier");
+		btnModifier.setBackground(SystemColor.controlHighlight);
 		btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -81,6 +84,7 @@ public class TaxeModifier extends JFrame {
 		contentPane.add(btnModifier);
 		
 		JButton btnAnnuler = new JButton("Annuler");
+		btnAnnuler.setBackground(SystemColor.controlHighlight);
 		btnAnnuler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();

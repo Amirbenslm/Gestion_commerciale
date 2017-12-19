@@ -79,7 +79,10 @@ public void supprimerLigne_vente(int id)
 	else
 		mytablemodel.supprimerLigne(id);
 }
-
+public Ligne_vente getLigne(int id)
+{
+return mytablemodel.getLigneVente(id);	
+}
 
 
 }

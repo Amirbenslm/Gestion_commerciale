@@ -25,8 +25,8 @@ public class ClotureBase{
 
 
 	}
-public boolean AjoutCloture(Cloture f1)
-{String req="INSERT INTO Cloture(date,montant_ouverture,montant_fermeture,id_caissier) VALUES('"+f1.getDate()+"','"+f1.getMontant_ouverture()+"',"+f1.getMontant_fermeture()+","+f1.getId_cassier()+")";
+public Cloture AjoutCloture(Cloture f1)
+{String req="INSERT INTO Cloture(date,montant_ouverture,montant_fermeture,etat,id_caissier) VALUES('"+f1.getDate()+"','"+f1.getMontant_ouverture()+"',"+f1.getMontant_fermeture()+",'"+f1.getEtat()+"',"+f1.getId_cassier()+")";
 String rech="select max(id_cloture) from cloture where date='"+f1.getDate()+"'"+"and montant_ouverture="+f1.getMontant_ouverture()+" and montant_fermeture="+f1.getMontant_fermeture()+" and id_caissier="+f1.getId_cassier();
 
 try {
@@ -34,7 +34,7 @@ try {
 	ResultSet rs=ConnectionDataBase.executeQuery(rech);
 	rs.next();
 	f1.setId_cloture(rs.getInt(1));
-	mytablemodel.AjouterLigne(f1);
+	//mytablemodel.AjouterLigne(f1);
 	
 	} catch (HeadlessException e1) {
 	// TODO Auto-generated catch block
@@ -44,7 +44,7 @@ try {
 	e1.printStackTrace();
 }
 
-	return true;
+	return f1;
 }
 
 

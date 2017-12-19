@@ -35,27 +35,16 @@ public	JTable table;
 	JComboBox cb_Recherche;
 	private ResultSet rsrech;
 	private TaxeModel rechercheModel;
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Taxes frame = new Taxes();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
 	public Taxes()  {
+		setResizable(false);
 		
 		setTitle("Taxes");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 658, 390);
+		setBounds(350, 100, 658, 390);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -69,6 +58,7 @@ public	JTable table;
 		contentPane.add(scrollPane);
 		
 		JButton Ajouter = new JButton("Ajouter");
+		Ajouter.setBackground(SystemColor.controlHighlight);
 		Ajouter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TaxeAjout ta=new TaxeAjout(db_taxe);
@@ -79,6 +69,7 @@ public	JTable table;
 		contentPane.add(Ajouter);
 		
 		JButton btnModifier = new JButton("Modifier");
+		btnModifier.setBackground(SystemColor.controlHighlight);
 		btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.isRowSelected(table.getSelectedRow()))
@@ -94,14 +85,18 @@ public	JTable table;
 		contentPane.add(btnModifier);
 		
 		JButton btnSupprimer = new JButton("Supprimer");
+		btnSupprimer.setBackground(SystemColor.controlHighlight);
 		btnSupprimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(table.isRowSelected(table.getSelectedRow()))
 				{
-					
+					int i=JOptionPane.showConfirmDialog(null, "La suppression est irréversible. Êtes-vous sûr de vouloir continuer?",
+                            "Veuillez confirmer votre choix",
+                            JOptionPane.YES_NO_OPTION);
+					 	if(i==0){
 					db_taxe.supprimerTaxe((int)table.getModel().getValueAt(table.getSelectedRow(),0));
-				}
+				}}
 				else
 				{JOptionPane.showMessageDialog(null,"Il faut selectionner une ligne!","Erreur",JOptionPane.ERROR_MESSAGE);}
 			}

@@ -24,6 +24,7 @@ int nblig;
 	Reglement_achat c;
 	private java.sql.ResultSetMetaData rsmd;
 	ArrayList <Reglement_achat> data=new ArrayList<Reglement_achat>();
+	private String date_reglement;
 	public  Reglement_achatModel(ResultSet rs) {
 		try
 		{
@@ -33,10 +34,11 @@ int nblig;
 				nblig++;
 				id_reg_achat=rs.getInt(1);
 				montant=rs.getDouble(2);
-				mode_payement=rs.getString(3);
-				echeance=rs.getString(4);
-				id_doc_achat=rs.getInt(5);
-				c=new  Reglement_achat(id_reg_achat,montant,mode_payement,echeance,id_doc_achat);
+				date_reglement=rs.getString(3);
+				mode_payement=rs.getString(4);
+				echeance=rs.getString(5);
+				id_doc_achat=rs.getInt(6);
+				c=new  Reglement_achat(id_reg_achat,montant,date_reglement,mode_payement,echeance,id_doc_achat);
 				data.add(c);
 			}
 		}
@@ -69,13 +71,14 @@ int nblig;
 		  }
 			if(c==1)
 			{return cl.getMontant();	}
-			
-		   if(c==2)
+			if(c==2)
+			{return cl.getDate_reglement();	}
+		   if(c==3)
 			{return cl.getMode_payement();}
-		if(c==3)
+		if(c==4)
 			{return cl.getEcheance();
 		}
-		if(c==4)
+		if(c==5)
 		{return cl.getId_doc_achat();
 	}
 		

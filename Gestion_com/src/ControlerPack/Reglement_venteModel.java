@@ -9,6 +9,7 @@ import classPack.Reglement_vente;
 public class Reglement_venteModel extends AbstractTableModel{
 	private  int id_reg_vente ;
 	private double montant;
+	private String date_reglement;
 	private String mode_paiement ;
 	private String echeance ;
 	private int id_doc_vente;
@@ -23,12 +24,13 @@ Reglement_vente c;
 			while(rs.next())
 			{
 				nblig++;
-				id_reg_vente=rs.getInt(1);
-				montant=rs.getDouble(2);
-				mode_paiement=rs.getString(3);
-				echeance=rs.getString(4);
-				id_doc_vente=rs.getInt(5);
-				c=new  Reglement_vente(id_reg_vente,montant,mode_paiement,echeance,id_doc_vente);
+				id_reg_vente=rs.getInt("id_reg_vente");
+				montant=rs.getDouble("montant");
+				date_reglement=rs.getString("date_reglement");
+				mode_paiement=rs.getString("mode_paiement");
+				echeance=rs.getString("echeance");
+				id_doc_vente=rs.getInt("id_doc_vente");
+				c=new  Reglement_vente(id_reg_vente,montant,date_reglement,mode_paiement,echeance,id_doc_vente);
 				data.add(c);
 			}
 		}
@@ -61,13 +63,15 @@ Reglement_vente c;
 		  }
 			if(c==1)
 			{return cl.getMontant();	}
+			if(c==2)
+			{return cl.getDate_reglement();	}
 			
-		   if(c==2)
+		   if(c==3)
 			{return cl.getMode_payement();}
-		if(c==3)
+		if(c==4)
 			{return cl.getEcheance();
 		}
-		if(c==4)
+		if(c==5)
 		{return cl.getId_doc_vente();
 	}
 		
@@ -111,13 +115,17 @@ Reglement_vente c;
 	Boolean b=false;
 	while(i<data.size()&&(b==false))
 	{
-	if(data.get(i).getId_doc_vente()==id)
+	if(data.get(i).getId_reg_vente()==id)
 	{
 	b=true;
 	}	
 	i++;
 	}
 			return i-1;
+	}
+	public Reglement_vente getReglement(int id) {
+		int ligne=RechercheBYID(id);
+		return data.get(ligne);
 	}
 	
 

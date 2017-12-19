@@ -18,6 +18,8 @@ import classPack.Article;
 import java.awt.Color;
 import javax.swing.UIManager;
 import java.awt.GridLayout;
+import java.awt.SystemColor;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -39,32 +41,21 @@ public class ArticleModifier extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	/* public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ArticleModifier frame = new ArticleModifier();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
+	
 
 	/**
 	 * Create the frame.
 	 */
 	public  ArticleModifier(ArticleBase db_article,Article a1,TableModel rechmodel) {
-		ConnectionDataBase.loadDriver("com.mysql.jdbc.Driver");
-		ConnectionDataBase.connect("jdbc:mysql://localhost:3306/gestioncommercial","root","");
+		
 		// TODO Auto-generated constructor stub
 	artiModifier=a1;
 		setVisible(true);
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 633, 397);
+		setBounds(350, 100, 633, 397);
+		this.setTitle(a1.getReference());
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -202,6 +193,7 @@ public class ArticleModifier extends JFrame {
 	}	
 	
 		JButton btnModifier = new JButton("Modifier");
+		btnModifier.setBackground(SystemColor.controlHighlight);
 		btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int id_famille = 0,id_taxe = 0;
@@ -242,10 +234,11 @@ public class ArticleModifier extends JFrame {
 			dispose();	
 			}
 		});
-		btnModifier.setBounds(346, 309, 89, 34);
+		btnModifier.setBounds(345, 323, 89, 34);
 		contentPane.add(btnModifier);
 		
 		JButton btnAnnuler = new JButton("Annuler");
+		btnAnnuler.setBackground(SystemColor.controlHighlight);
 		btnAnnuler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
@@ -253,7 +246,7 @@ public class ArticleModifier extends JFrame {
 				dispose();
 			}
 		});
-		btnAnnuler.setBounds(474, 309, 96, 34);
+		btnAnnuler.setBounds(474, 323, 96, 34);
 		contentPane.add(btnAnnuler);
 	}
 }

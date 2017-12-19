@@ -50,7 +50,6 @@ public class FournisseurJInternelFrame extends JInternalFrame  implements MouseL
 	public FournisseurJInternelFrame()  {
 		
 		setBounds(100, 100, 450, 300);
-		// db_client=new ClientBase((ResultSet)ConnectionDataBase.executeQuery("select * from client"));
 		db_fournisseur=new FournisseurBase();
 		    this.setBorder(null);
 			this.setResizable(true);
@@ -127,9 +126,12 @@ public class FournisseurJInternelFrame extends JInternalFrame  implements MouseL
 	bsup.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			if(table.isRowSelected(table.getSelectedRow()))
-			{
+			{int i=JOptionPane.showConfirmDialog(null, "La suppression est irréversible. Êtes-vous sûr de vouloir continuer?",
+                    "Veuillez confirmer votre choix",
+                    JOptionPane.YES_NO_OPTION);
+			 	if(i==0){
 				db_fournisseur.supprimerFourisseur(table.getSelectedRow());
-			}
+			}}
 			else
 			{JOptionPane.showMessageDialog(null,"Il faut selectionner une ligne!","Erreur",JOptionPane.ERROR_MESSAGE);}
 		}
